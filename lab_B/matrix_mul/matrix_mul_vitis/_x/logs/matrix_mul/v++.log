@@ -1,0 +1,14 @@
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/ubuntu/lab_B/matrix_mul_vitis/_x/reports/matrix_mul
+	Log files: /home/ubuntu/lab_B/matrix_mul_vitis/_x/logs/matrix_mul
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/ubuntu/lab_B/matrix_mul_vitis/matrix_mul.xo.compile_summary, at Wed Nov 13 11:38:28 2024
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Wed Nov 13 11:38:28 2024
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/ubuntu/lab_B/matrix_mul_vitis/_x/reports/matrix_mul/v++_compile_matrix_mul_guidance.html', at Wed Nov 13 11:38:29 2024
+ERROR: [v++ 60-1258] No valid platform was found that matches 'xilinx_u50_gen3x16_xdma_201920_3'. Please make sure that the platform is specified correctly, and the platform has the right version number. The platform repo paths are:
+	/tools/Xilinx/Vitis/2022.1/platforms
+	/opt/xilinx/platforms
+The valid platforms found from the above repo paths are:
+	/opt/xilinx/platforms/xilinx_u50_gen3x16_xdma_5_202210_1/xilinx_u50_gen3x16_xdma_5_202210_1.xpfm
+
+ERROR: [v++ 60-587] Failed to add a platform: specified platform xilinx_u50_gen3x16_xdma_201920_3 is not found or is not valid
+ERROR: [v++ 60-592] Failed to finish compilation
