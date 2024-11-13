@@ -1,5 +1,8 @@
 # Matrix Multiplication Project using Vitis HLS for Xilinx U50
 
+Lab#B of the course 2024-Fall-Application-Acceleration-with-High-Level-Synthsis in NTU
+[Github Repository](https://github.com/kabazoka/NTU-Special-Project-on-AAHLS/tree/main/lab_B)
+
 ## Table of Contents
 1. [Introduction](#introduction)
 2. [Prerequisites](#prerequisites)
