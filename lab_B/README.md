@@ -1,42 +1,29 @@
 # Matrix Multiplication Project using Vitis HLS for Xilinx U50
 
-## Table of Contents
+Lab#B of the course 2024-Fall-Application-Acceleration-with-High-Level-Synthsis in NTU
+[Github Repository](https://github.com/kabazoka/NTU-Special-Project-on-AAHLS/tree/main/lab_B)
 
-- [Matrix Multiplication Project using Vitis HLS for Xilinx U50](#matrix-multiplication-project-using-vitis-hls-for-xilinx-u50)
-  - [Table of Contents](#table-of-contents)
-  - [Introduction](#introduction)
-  - [Prerequisites](#prerequisites)
-  - [Setting Up the Environment](#setting-up-the-environment)
-  - [Creating the Matrix Multiplication Kernel](#creating-the-matrix-multiplication-kernel)
-  - [Writing the Testbench](#writing-the-testbench)
-  - [Running C Simulation](#running-c-simulation)
-  - [Synthesizing the Design](#synthesizing-the-design)
-  - [Synthesizing the Design](#synthesizing-the-design-1)
-    - [Update the HLS Script](#update-the-hls-script)
-    - [Run Synthesis](#run-synthesis)
-    - [Analyze Synthesis Reports](#analyze-synthesis-reports)
-  - [Exporting the Kernel](#exporting-the-kernel)
-    - [Export IP](#export-ip)
-    - [Locate the Exported Files](#locate-the-exported-files)
-  - [Creating the Vitis Application](#creating-the-vitis-application)
-    - [Directory Structure](#directory-structure)
-    - [Copy the Kernel and Header Files](#copy-the-kernel-and-header-files)
-    - [Write the Host Application](#write-the-host-application)
-    - [Code Explanation](#code-explanation)
-    - [Include the Header File](#include-the-header-file)
-  - [Building and Running the Application](#building-and-running-the-application)
-    - [Create a Makefile](#create-a-makefile)
-    - [Build the Application](#build-the-application)
-    - [Run the Application](#run-the-application)
-    - [Expected Output](#expected-output)
-  - [Conclusion](#conclusion)
-  - [References](#references)
+## Table of Contents
+1. [Introduction](#introduction)
+2. [Prerequisites](#prerequisites)
+3. [Setting Up the Environment](#setting-up-the-environment)
+4. [Project Overview](#project-overview)
+5. [Understanding the Kernel Code](#understanding-the-kernel-code)
+6. [Understanding the Testbench](#understanding-the-testbench)
+7. [Running C Simulation](#running-c-simulation)
+8. [Synthesizing the Design](#synthesizing-the-design)
+9. [Exporting the Kernel](#exporting-the-kernel)
+10. [Creating the Vitis Application](#creating-the-vitis-application)
+11. [Understanding the Host Application](#understanding-the-host-application)
+12. [Building and Running the Application](#building-and-running-the-application)
+13. [Conclusion](#conclusion)
+14. [References](#references)
 
 ## Introduction
 
 This tutorial guides you through the process of creating a matrix multiplication project using Vitis High-Level Synthesis (HLS) for the Xilinx Alveo U50 accelerator card. You’ll learn how to:
-- Write the matrix multiplication kernel using C++.
-- Create a testbench for simulation and verification.
+- Set up the development environment.
+- Understand the matrix multiplication kernel and testbench.
 - Synthesize the design and generate the hardware description.
 - Integrate the kernel into a Vitis application for hardware acceleration.
 - Build and run the application on the FPGA.
@@ -55,594 +42,302 @@ Before starting, ensure you have the following:
 
 ## Setting Up the Environment
 
-1. **Install Vitis and XRT**
-    - **Vitis Installation**: Download and install the Vitis Unified Software Platform from the Xilinx website.
-    - **XRT Installation**: Install the appropriate Xilinx Runtime (XRT) for your operating system and Alveo card.
+### 1. Install Vitis and XRT
 
-2. **Set Up Environment Variables**
+- **Vitis Installation**: Download and install the Vitis Unified Software Platform from the Xilinx website.
+- **XRT Installation**: Install the appropriate Xilinx Runtime (XRT) for your operating system and Alveo card.
 
-    Source the Vitis and XRT setup scripts to configure your environment:
+### 2. Set Up Environment Variables
 
-    ```sh
-    # Source Vitis setup script
-    source /opt/xilinx/Vitis/2020.2/settings64.sh
+Source the Vitis and XRT setup scripts to configure your environment:
 
-    # Source XRT setup script
-    source /opt/xilinx/xrt/setup.sh
-    ```
+```sh
+# Source Vitis setup script
+source /opt/xilinx/Vitis/2020.2/settings64.sh
 
-3. **Verify the Alveo U50 Card**
+# Source XRT setup script
+source /opt/xilinx/xrt/setup.sh
+```
 
-    Check if the Alveo U50 card is properly installed:
+### 3. Verify the Alveo U50 Card
 
-    ```sh
-    xbutil validate
-    ```
+Check if the Alveo U50 card is properly installed:
 
-## Creating the Matrix Multiplication Kernel
+```sh
+xbutil validate
+```
 
-We will write a matrix multiplication kernel in C++ that will be synthesized using Vitis HLS.
+## Project Overview
 
-1. **Directory Structure**
+The project consists of the following components:
+- **Kernel Code (matrix_mul.cpp)**: Implements the matrix multiplication algorithm to be synthesized into hardware.
+- **Header File (matrix_mul.h)**: Contains function declarations and shared definitions.
+- **Testbench (testbench.cpp)**: Used for simulation and verification of the kernel.
+- **Vitis HLS Script (run_hls.tcl)**: Automates the HLS flow.
+- **Host Application (host.cpp)**: Manages communication between the host and the FPGA kernel.
+- **Makefile**: Automates the build process for the Vitis application.
 
-    Create a project directory:
+## Understanding the Kernel Code
 
-    ```sh
-    mkdir -p matrix_mul_hls/src
-    cd matrix_mul_hls
-    ```
+### 1. Kernel Function: `matrix_mul`
 
-2. **Create the Header File**
+- **Purpose**: Performs matrix multiplication of two input matrices A and B, producing output matrix C.
+- **Signature**:
 
-    Create a file named `matrix_mul.h` in the `src` directory:
+```cpp
+void matrix_mul(const data_t *A, const data_t *B, data_t *C, int M, int N, int K);
+```
 
-    ```cpp
-    // File: src/matrix_mul.h
+- **A, B, C**: Pointers to input and output matrices in global memory.
+- **M, N, K**: Dimensions of the matrices.
 
-    #ifndef MATRIX_MUL_H
-    #define MATRIX_MUL_H
+### 2. Data Types and Macros
 
-    #define MAX_SIZE 256
-    typedef float data_t;
+- **data_t**: Typedef for float, representing the data type used in computations.
+- **MAX_SIZE**: Defines the maximum allowable dimension for matrices (e.g., 256).
 
-    // Matrix multiplication kernel function declaration
-    extern "C" {
-    void matrix_mul(
-         const data_t *A,
-         const data_t *B,
-         data_t *C,
-         int M,
-         int N,
-         int K
-    );
-    }
+### 3. Interface Pragmas
 
-    #endif // MATRIX_MUL_H
-    ```
+- **AXI Master Interfaces (m_axi)**:
+    - Used for memory-mapped access to global memory.
+    - Ports: A, B, C.
+    - Bundles: gmem0, gmem1, gmem2.
+- **AXI Lite Interfaces (s_axilite)**:
+    - Used for control signals and scalar arguments.
+    - Ports: A, B, C, M, N, K, and return.
 
-3. **Write the Kernel Code**
+### 4. HLS Pragmas
 
-    Create a file named `matrix_mul.cpp` in the `src` directory:
+- `#pragma HLS INTERFACE`: Defines the interface protocols for function arguments.
+- `#pragma HLS ARRAY_PARTITION`:
+    - Partitions arrays to enable parallel access.
+    - Used on local_A and local_B arrays to optimize memory access patterns.
+- `#pragma HLS PIPELINE`:
+    - Pipelines loops to improve throughput.
+    - Applied with an initiation interval (II) of 1.
+- `#pragma HLS UNROLL`:
+    - Unrolls loops completely or partially to exploit parallelism.
+    - Used in the innermost loop over k in the matrix multiplication.
 
-    ```cpp
-    // File: src/matrix_mul.cpp
+### 5. Local Buffers
 
-    #include "matrix_mul.h"
-    #include <hls_stream.h>
-    #include <ap_axi_sdata.h>
-    #include <ap_int.h>
+- **local_A, local_B, local_C**:
+    - Arrays stored in on-chip memory (BRAM or URAM).
+    - Hold portions of matrices A, B, and C for faster access during computation.
 
-    // Matrix multiplication kernel
-    extern "C" {
-    void matrix_mul(
-         const data_t *A,
-         const data_t *B,
-         data_t *C,
-         int M,
-         int N,
-         int K
-    ) {
-    #pragma HLS INTERFACE m_axi port=A offset=slave bundle=gmem0
-    #pragma HLS INTERFACE m_axi port=B offset=slave bundle=gmem1
-    #pragma HLS INTERFACE m_axi port=C offset=slave bundle=gmem2
+### 6. Algorithm Steps
 
-    #pragma HLS INTERFACE s_axilite port=A     bundle=control
-    #pragma HLS INTERFACE s_axilite port=B     bundle=control
-    #pragma HLS INTERFACE s_axilite port=C     bundle=control
-    #pragma HLS INTERFACE s_axilite port=M     bundle=control
-    #pragma HLS INTERFACE s_axilite port=N     bundle=control
-    #pragma HLS INTERFACE s_axilite port=K     bundle=control
-    #pragma HLS INTERFACE s_axilite port=return bundle=control
+1. **Data Transfer from Global to Local Memory**:
+     - Reads matrices A and B from global memory into local buffers local_A and local_B.
+     - Loops are pipelined to optimize data transfer rates.
+2. **Initialization of Output Matrix**:
+     - Initializes local_C to zero before computation.
+     - Ensures no residual data affects the results.
+3. **Matrix Multiplication Computation**:
+     - Performs the nested loop computation to calculate each element of the output matrix.
+     - Inner loop over k is unrolled for parallel multiplication and addition.
+4. **Data Transfer from Local to Global Memory**:
+     - Writes the computed matrix local_C back to global memory into C.
+     - Loops are pipelined to maximize throughput.
 
-         data_t local_A[MAX_SIZE][MAX_SIZE];
-         data_t local_B[MAX_SIZE][MAX_SIZE];
-         data_t local_C[MAX_SIZE][MAX_SIZE];
+### 7. Function Attributes
 
-    #pragma HLS ARRAY_PARTITION variable=local_A dim=2 complete
-    #pragma HLS ARRAY_PARTITION variable=local_B dim=1 complete
+- **extern "C"**:
+    - Prevents C++ name mangling.
+    - Ensures that the function can be linked correctly during the HLS process.
 
-         // Read A and B matrices from global memory to local memory
-         readA: for (int i = 0; i < M; i++) {
-              readA_inner: for (int j = 0; j < K; j++) {
-    #pragma HLS PIPELINE II=1
-                    local_A[i][j] = A[i * K + j];
-              }
-         }
+## Understanding the Testbench
 
-         readB: for (int i = 0; i < K; i++) {
-              readB_inner: for (int j = 0; j < N; j++) {
-    #pragma HLS PIPELINE II=1
-                    local_B[i][j] = B[i * N + j];
-              }
-         }
+### 1. Reference Function: `reference_mmul`
 
-         // Initialize local_C matrix
-         initC: for (int i = 0; i < M; i++) {
-              initC_inner: for (int j = 0; j < N; j++) {
-    #pragma HLS PIPELINE II=1
-                    local_C[i][j] = 0;
-              }
-         }
+- **Purpose**: Provides a software implementation of matrix multiplication for verification purposes.
+- **Signature**:
 
-         // Perform matrix multiplication
-         mmult: for (int i = 0; i < M; i++) {
-              mmult_j: for (int j = 0; j < N; j++) {
-    #pragma HLS PIPELINE II=1
-                    data_t sum = 0;
-                    mmult_k: for (int k = 0; k < K; k++) {
-    #pragma HLS UNROLL
-                         sum += local_A[i][k] * local_B[k][j];
-                    }
-                    local_C[i][j] = sum;
-              }
-         }
+```cpp
+void reference_mmul(const data_t *A, const data_t *B, data_t *C_ref, int M, int N, int K);
+```
 
-         // Write result matrix C back to global memory
-         writeC: for (int i = 0; i < M; i++) {
-              writeC_inner: for (int j = 0; j < N; j++) {
-    #pragma HLS PIPELINE II=1
-                    C[i * N + j] = local_C[i][j];
-              }
-         }
-    }
-    }
-    ```
+- **A, B, C_ref**: Pointers to input matrices and reference output matrix.
+- **M, N, K**: Dimensions of the matrices.
+- **Implementation**: Uses standard nested loops to compute the product of matrices A and B, storing the result in C_ref.
 
-4. **Code Explanation**
+### 2. Main Function
 
-    - **Interfaces**: AXI Master interfaces (`m_axi`) for accessing global memory and AXI Lite interfaces (`s_axilite`) for control signals.
-    - **HLS Pragmas**:
-      - `#pragma HLS PIPELINE II=1`: Pipelines loops with an initiation interval of 1.
-      - `#pragma HLS UNROLL`: Unrolls loops for parallelism.
-      - `#pragma HLS ARRAY_PARTITION`: Partitions arrays for parallel access.
-    - **Local Buffers**: `local_A`, `local_B`, and `local_C` store matrices in on-chip memory for faster access.
+- **Initialization**:
+    - Allocates memory for matrices A, B, C (kernel output), and C_ref (reference output).
+    - Initializes matrices A and B with random floating-point values.
+- **Kernel Invocation**:
+    - Calls `reference_mmul` to compute the expected result.
+    - Calls `matrix_mul` (the kernel) to compute the result using the HLS implementation.
+- **Verification**:
+    - Compares each element of the kernel output C with the reference output C_ref.
+    - Uses a small epsilon tolerance to account for floating-point inaccuracies.
+    - Reports mismatches and counts the total number of errors.
+- **Cleanup**:
+    - Deallocates memory for all matrices.
+    - Returns the number of errors as the exit code.
 
-## Writing the Testbench
+### 3. Error Handling and Reporting
 
-Create a testbench to verify the functionality of the kernel.
-
-1. **Create the Testbench File**
-
-    Create a file named `testbench.cpp` in the `src` directory:
-
-    ```cpp
-    // File: src/testbench.cpp
-
-    #include <iostream>
-    #include <cstdlib>
-    #include "matrix_mul.h"
-
-    void reference_mmul(
-         const data_t *A,
-         const data_t *B,
-         data_t *C_ref,
-         int M,
-         int N,
-         int K
-    ) {
-         for (int i = 0; i < M; i++) {
-              for (int j = 0; j < N; j++) {
-                    data_t sum = 0;
-                    for (int k = 0; k < K; k++) {
-                         sum += A[i * K + k] * B[k * N + j];
-                    }
-                    C_ref[i * N + j] = sum;
-              }
-         }
-    }
-
-    int main() {
-         const int M = 64;
-         const int N = 64;
-         const int K = 64;
-
-         data_t *A = new data_t[M * K];
-         data_t *B = new data_t[K * N];
-         data_t *C = new data_t[M * N];
-         data_t *C_ref = new data_t[M * N];
-
-         // Initialize matrices A and B with random values
-         for (int i = 0; i < M * K; i++) {
-              A[i] = static_cast<data_t>(rand()) / RAND_MAX;
-         }
-         for (int i = 0; i < K * N; i++) {
-              B[i] = static_cast<data_t>(rand()) / RAND_MAX;
-         }
-
-         // Call the reference implementation
-         reference_mmul(A, B, C_ref, M, N, K);
-
-         // Call the HLS kernel
-         matrix_mul(A, B, C, M, N, K);
-
-         // Compare the results
-         int errors = 0;
-         const float epsilon = 1e-3;
-         for (int i = 0; i < M * N; i++) {
-              if (abs(C[i] - C_ref[i]) > epsilon) {
-                    errors++;
-                    std::cout << "Mismatch at index " << i << ": C = " << C[i]
-                                 << ", C_ref = " << C_ref[i] << std::endl;
-              }
-         }
-
-         if (errors == 0) {
-              std::cout << "TEST PASSED!" << std::endl;
-         } else {
-              std::cout << "TEST FAILED with " << errors << " errors." << std::endl;
-         }
-
-         delete[] A;
-         delete[] B;
-         delete[] C;
-         delete[] C_ref;
-
-         return errors;
-    }
-    ```
-
-2. **Code Explanation**
-
-    - **Reference Implementation**: `reference_mmul` provides a software implementation for verification.
-    - **Random Initialization**: Matrices A and B are filled with random floating-point values.
-    - **Verification**: Compares the output from the kernel with the reference within a small epsilon tolerance.
-    - **Error Reporting**: Outputs mismatches and the total number of errors.
+- **Tolerance Level**:
+    - A predefined epsilon (e.g., 1e-3) is used to determine acceptable differences between computed values.
+- **Output Messages**:
+    - Reports “TEST PASSED!” if there are no errors.
+    - Reports “TEST FAILED” along with the number of errors if mismatches are found.
 
 ## Running C Simulation
 
-Before synthesizing the design, verify its functionality through C simulation.
+### 1. Vitis HLS Project Script (run_hls.tcl)
 
-1. **Create a Vitis HLS Project Script**
+- Automates the HLS process using TCL commands.
+- Key steps in the script:
+    - **Project Setup**:
+        - Opens or creates a project named `matrix_mul_hls`.
+        - Sets the top function to `matrix_mul`.
+    - **Adding Files**:
+        - Adds `matrix_mul.cpp` as the source file.
+        - Adds `testbench.cpp` as the testbench file.
+    - **Solution Configuration**:
+        - Opens or resets a solution named `solution1`.
+        - Sets the target device part (e.g., `xcu50-fsvh2104-2-e`).
+        - Creates a clock with a specified period (e.g., 3.33 ns).
+    - **Simulation and Synthesis**:
+        - Runs C simulation (`csim_design`) to verify functionality.
+        - Runs C synthesis (`csynth_design`) to generate the RTL.
+        - Runs co-simulation (`cosim_design`) to verify the RTL against the C model.
+        - Exports the design as an IP core (`export_design -format ip_catalog`).
 
-    Create a script named `run_hls.tcl` in the project directory:
+### 2. Execution
 
-    ```tcl
-    # File: run_hls.tcl
-
-    open_project matrix_mul_hls
-    set_top matrix_mul
-    add_files ./src/matrix_mul.cpp
-    add_files -tb ./src/testbench.cpp
-    open_solution -reset solution1
-    set_part xcu50-fsvh2104-2-e
-    create_clock -period 3.33 -name default
-    csim_design
-    ```
-
-2. **Run the HLS Script**
-
-    Execute the HLS script:
-
-    ```sh
-    vitis_hls -f run_hls.tcl
-    ```
-
-3. **Analyze the Simulation Results**
-
-    Check the console output to ensure that the test passed:
-
-    ```sh
-    TEST PASSED!
-    ```
-
-    If the test failed, revisit your kernel and testbench code to fix any issues.
-
-## Synthesizing the Design
-
-Now that the simulation passes, proceed to synthesize the design.
-## Synthesizing the Design
-
-### Update the HLS Script
-
-Modify `run_hls.tcl` to include synthesis and analysis:
-
-```tcl
-# File: run_hls.tcl
-
-open_project matrix_mul_hls
-set_top matrix_mul
-add_files ./src/matrix_mul.cpp
-add_files -tb ./src/testbench.cpp
-open_solution -reset solution1
-set_part xcu50-fsvh2104-2-e
-create_clock -period 3.33 -name default
-csim_design
-csynth_design
-cosim_design
-export_design -format ip_catalog
-```
-
-### Run Synthesis
-
-Execute the HLS script:
+Run the HLS script using:
 
 ```sh
 vitis_hls -f run_hls.tcl
 ```
 
-### Analyze Synthesis Reports
+### 3. Analyzing Results
 
-After synthesis, review the reports generated in:
+- **C Simulation**:
+    - Verifies that the kernel behaves as expected in a high-level simulation.
+    - Look for “TEST PASSED!” in the console output.
+- **Synthesis Reports**:
+    - Located in `matrix_mul_hls/solution1/syn/report/`.
+    - Contains information on latency, resource utilization, and timing.
 
-```
-matrix_mul_hls/solution1/syn/report/
-```
+## Synthesizing the Design
 
-Check for:
-- **Latency**: Ensure the latency meets your performance requirements.
-- **Resource Utilization**: Verify that the design fits within the resources of the U50 card.
+- **C Synthesis**:
+    - Translates the high-level C++ code into an RTL implementation.
+    - Optimizes the design based on the HLS pragmas and target device constraints.
+- **Co-Simulation**:
+    - Verifies that the synthesized RTL behaves identically to the C model.
+    - Ensures correctness before proceeding to implementation.
+- **Exporting Design**:
+    - Generates the necessary files to integrate the kernel into a larger system or application.
+    - Exports as an IP core compatible with Vitis.
 
 ## Exporting the Kernel
 
-Export the synthesized kernel for integration into a Vitis application.
+The exported IP core is located in:
 
-### Export IP
-
-The `export_design` command in the HLS script exports the design as an IP core.
-
-### Locate the Exported Files
-
-The exported IP can be found in:
-
-```
+```sh
 matrix_mul_hls/solution1/impl/ip
 ```
 
+Contains the synthesized kernel ready for integration into a Vitis application.
+
 ## Creating the Vitis Application
 
-Now, integrate the HLS kernel into a Vitis application to create a hardware-accelerated matrix multiplication program.
-
-### Directory Structure
+### 1. Directory Structure
 
 Create a new directory for the Vitis application:
 
 ```sh
-mkdir -p ../matrix_mul_vitis/src
-cd ../matrix_mul_vitis
+mkdir -p matrix_mul_vitis/src
 ```
 
-### Copy the Kernel and Header Files
+Place the kernel files (`matrix_mul.cpp`, `matrix_mul.h`) and the host application (`host.cpp`) in the `src` directory.
 
-Copy the kernel and header files to the `src` directory:
+### 2. Build Automation
 
-```sh
-cp ../matrix_mul_hls/src/matrix_mul.cpp ./src/
-cp ../matrix_mul_hls/src/matrix_mul.h ./src/
-```
+- **Makefile**:
+    - Automates the compilation and linking of the kernel and host application.
+    - Defines variables for target, device, sources, compiler flags, and linker flags.
+    - Contains targets for building the kernel (.xo and .xclbin files) and the host application.
 
-### Write the Host Application
+## Understanding the Host Application
 
-Create a file named `host.cpp` in the `src` directory:
+### 1. Initialization
 
-```cpp
-// File: src/host.cpp
+- **Data Structures**:
+    - Allocates aligned memory buffers for matrices A, B, and C using `std::vector` with `aligned_allocator`.
+- **Random Data Generation**:
+    - Populates matrices A and B with random floating-point values for testing.
 
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <cstdlib>
-#include "xcl2.hpp"
-#include "matrix_mul.h"
+### 2. OpenCL Setup
 
-int main(int argc, char** argv) {
-    const int M = 64;
-    const int N = 64;
-    const int K = 64;
+- **Device Discovery**:
+    - Uses `xcl::get_xil_devices()` to enumerate available FPGA devices.
+    - Reads the compiled kernel binary (`matrix_mul.xclbin`).
+- **Context and Command Queue**:
+    - Creates an OpenCL context and command queue for the selected device.
+    - Enables profiling by setting `CL_QUEUE_PROFILING_ENABLE`.
+- **Kernel Creation**:
+    - Programs the device with the kernel binary.
+    - Creates an OpenCL kernel object from the program.
 
-    size_t matrix_size_bytes_A = sizeof(data_t) * M * K;
-    size_t matrix_size_bytes_B = sizeof(data_t) * K * N;
-    size_t matrix_size_bytes_C = sizeof(data_t) * M * N;
+### 3. Buffer Management
 
-    std::vector<data_t, aligned_allocator<data_t>> A(M * K);
-    std::vector<data_t, aligned_allocator<data_t>> B(K * N);
-    std::vector<data_t, aligned_allocator<data_t>> C(M * N);
+- **Memory Buffers**:
+    - Creates OpenCL buffers for matrices A, B, and C with appropriate access flags.
+    - Associates host memory pointers with these buffers.
 
-    // Initialize matrices A and B with random values
-    for (int i = 0; i < M * K; i++) {
-        A[i] = static_cast<data_t>(rand()) / RAND_MAX;
-    }
-    for (int i = 0; i < K * N; i++) {
-        B[i] = static_cast<data_t>(rand()) / RAND_MAX;
-    }
+### 4. Kernel Execution
 
-    // Get the device
-    cl_int err;
-    cl::Context context;
-    cl::CommandQueue q;
-    cl::Kernel kernel;
+- **Setting Kernel Arguments**:
+    - Sets the kernel arguments corresponding to the buffers and scalar parameters (M, N, K).
+- **Data Transfer to Device**:
+    - Enqueues commands to transfer input matrices A and B to the device global memory.
+- **Kernel Launch**:
+    - Enqueues the kernel execution command.
+- **Data Transfer from Device**:
+    - Enqueues commands to transfer the output matrix C back to host memory.
+- **Synchronization**:
+    - Waits for all enqueued commands to complete using `q.finish()`.
 
-    auto devices = xcl::get_xil_devices();
-    auto fileBuf = xcl::read_binary_file("matrix_mul.xclbin");
-    cl::Program::Binaries bins{{fileBuf.data(), fileBuf.size()}};
-    bool valid_device = false;
+### 5. Verification
 
-    for (unsigned int i = 0; i < devices.size(); i++) {
-        auto device = devices[i];
-        OCL_CHECK(err, context = cl::Context(device, NULL, NULL, NULL, &err));
-        OCL_CHECK(err, q = cl::CommandQueue(context, device,
-                                            CL_QUEUE_PROFILING_ENABLE, &err));
+- **Reference Computation**:
+    - Computes the expected result on the host using the same reference function as in the testbench.
+- **Result Comparison**:
+    - Compares each element of the output matrix C with the reference result.
+    - Reports mismatches and counts errors.
 
-        std::cout << "Trying to program device: "
-                  << device.getInfo<CL_DEVICE_NAME>() << std::endl;
-        cl::Program program(context, {device}, bins, NULL, &err);
+### 6. Error Handling and Reporting
 
-        if (err != CL_SUCCESS) {
-            std::cout << "Failed to program device with xclbin file!" << std::endl;
-        } else {
-            std::cout << "Device programmed successfully!" << std::endl;
-            OCL_CHECK(err, kernel = cl::Kernel(program, "matrix_mul", &err));
-            valid_device = true;
-            break;
-        }
-    }
-
-    if (!valid_device) {
-        std::cerr << "Failed to program any device found, exiting." << std::endl;
-        exit(EXIT_FAILURE);
-    }
-
-    // Allocate buffers
-    OCL_CHECK(err, cl::Buffer buffer_A(context, CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY,
-                                       matrix_size_bytes_A, A.data(), &err));
-    OCL_CHECK(err, cl::Buffer buffer_B(context, CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY,
-                                       matrix_size_bytes_B, B.data(), &err));
-    OCL_CHECK(err, cl::Buffer buffer_C(context, CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY,
-                                       matrix_size_bytes_C, C.data(), &err));
-
-    // Set kernel arguments
-    int arg_index = 0;
-    OCL_CHECK(err, err = kernel.setArg(arg_index++, buffer_A));
-    OCL_CHECK(err, err = kernel.setArg(arg_index++, buffer_B));
-    OCL_CHECK(err, err = kernel.setArg(arg_index++, buffer_C));
-    OCL_CHECK(err, err = kernel.setArg(arg_index++, M));
-    OCL_CHECK(err, err = kernel.setArg(arg_index++, N));
-    OCL_CHECK(err, err = kernel.setArg(arg_index++, K));
-
-    // Copy input data to device global memory
-    OCL_CHECK(err, err = q.enqueueMigrateMemObjects({buffer_A, buffer_B},
-                                                    0 /* 0 means from host*/));
-
-    // Launch the kernel
-    OCL_CHECK(err, err = q.enqueueTask(kernel));
-
-    // Copy result from device global memory to host
-    OCL_CHECK(err, err = q.enqueueMigrateMemObjects({buffer_C},
-                                                    CL_MIGRATE_MEM_OBJECT_HOST));
-    q.finish();
-
-    // Verification
-    std::vector<data_t> C_ref(M * N, 0);
-    for (int i = 0; i < M; i++) {
-        for (int j = 0; j < N; j++) {
-            data_t sum = 0;
-            for (int k = 0; k < K; k++) {
-                sum += A[i * K + k] * B[k * N + j];
-            }
-            C_ref[i * N + j] = sum;
-        }
-    }
-
-    // Compare the results
-    int errors = 0;
-    const float epsilon = 1e-3;
-    for (int i = 0; i < M * N; i++) {
-        if (abs(C[i] - C_ref[i]) > epsilon) {
-            errors++;
-            std::cout << "Mismatch at index " << i << ": C = " << C[i]
-                      << ", C_ref = " << C_ref[i] << std::endl;
-        }
-    }
-
-    if (errors == 0) {
-        std::cout << "TEST PASSED!" << std::endl;
-    } else {
-        std::cout << "TEST FAILED with " << errors << " errors." << std::endl;
-    }
-
-    return errors;
-}
-```
-
-### Code Explanation
-
-- **OpenCL Host Code**: Uses OpenCL APIs to interact with the FPGA kernel.
-- **xcl2.hpp**: Helper functions provided by Xilinx to simplify OpenCL programming.
-- **Memory Buffers**: Allocates memory buffers for matrices A, B, and C.
-- **Kernel Execution**: Sets kernel arguments, enqueues the kernel, and handles data migration.
-- **Verification**: Compares the FPGA result with the software computation.
-
-### Include the Header File
-
-Ensure that `host.cpp` includes `matrix_mul.h` and that definitions are consistent.
+- Reports whether the test passed or failed based on the comparison results.
 
 ## Building and Running the Application
 
-### Create a Makefile
+### 1. Building with Makefile
 
-Create a `Makefile` in the project directory:
-
-```makefile
-# File: Makefile
-
-TARGET := hw
-DEVICE := xilinx_u50_gen3x16_xdma_201920_3
-
-XSA := $(DEVICE)
-XO  := matrix_mul.xo
-XCLBIN := matrix_mul.xclbin
-
-VPP := v++
-VPP_FLAGS := -t $(TARGET) --platform $(XSA) --save-temps
-VPP_FLAGS += --kernel_frequency 300
-
-HOST_SRCS := ./src/host.cpp
-KERNEL_SRCS := ./src/matrix_mul.cpp
-
-CXX := g++
-CXXFLAGS := -I/opt/xilinx/xrt/include -O2 -fmessage-length=0 -std=c++14
-LDFLAGS := -L/opt/xilinx/xrt/lib -lxilinxopencl -lpthread -lrt -lstdc++ -Wl,--rpath,/opt/xilinx/xrt/lib
-
-# Include path for xcl2.hpp
-CXXFLAGS += -I/opt/xilinx/Vitis/2020.2/include
-
-.PHONY: all clean
-
-all: $(XCLBIN) host
-
-$(XO): $(KERNEL_SRCS)
-    $(VPP) -c $(VPP_FLAGS) -k matrix_mul -o'$@' '$<'
-
-$(XCLBIN): $(XO)
-    $(VPP) -l $(VPP_FLAGS) -o'$@' '$<'
-
-host: $(HOST_SRCS)
-    $(CXX) $(CXXFLAGS) -o '$@' '$<' $(LDFLAGS)
-
-clean:
-    rm -rf *.xclbin *.xo host *.o _x .Xil
-```
-
-### Build the Application
-
-Run the `make` command:
+Run the `make` command to build the kernel and host application:
 
 ```sh
 make all
 ```
 
-This command compiles the kernel and the host application.
+### 2. Running the Application
 
-### Run the Application
-
-Execute the application:
+Execute the host application:
 
 ```sh
 ./host
 ```
 
-### Expected Output
+### 3. Expected Output
 
-You should see output indicating that the device was programmed successfully and that the test passed:
+Successful execution should display:
 
 ```
 Trying to program device: xilinx_u50_gen3x16_xdma_201920_3
@@ -650,16 +345,24 @@ Device programmed successfully!
 TEST PASSED!
 ```
 
-If the test fails, check for errors in the host code or the kernel.
+If there are errors, the application will report the number of mismatches.
+
+### 4. Cleaning the Build
+
+Use the `make clean` command to remove generated files:
+
+```sh
+make clean
+```
 
 ## Conclusion
 
-You have successfully created a matrix multiplication project using Vitis HLS for the Xilinx U50 accelerator card. This comprehensive guide covered:
-- Writing the matrix multiplication kernel and header file.
-- Creating a testbench for simulation and verification.
-- Synthesizing the design using Vitis HLS.
-- Exporting the kernel and integrating it into a Vitis application.
-- Building and running the application on FPGA hardware.
+You have successfully created a matrix multiplication project using Vitis HLS for the Xilinx U50 accelerator card. This tutorial covered:
+- Setting up the development environment.
+- Understanding the kernel and testbench code.
+- Running C simulation and analyzing results.
+- Synthesizing the design and exporting the kernel.
+- Building and running the Vitis application on FPGA hardware.
 
 By following this tutorial, you now have a foundation for developing more complex FPGA-accelerated applications using Vitis HLS and the Xilinx Alveo U50 card.
 
@@ -667,8 +370,10 @@ By following this tutorial, you now have a foundation for developing more comple
 
 - Vitis HLS User Guide: UG1399
 - Vitis Application Acceleration Development Flow: UG1393
-- Xilinx Runtime (XRT) Documentation: [XRT Docs](https://xilinx.github.io/XRT/)
-- Xilinx Alveo U50 Data Center Accelerator Card: [Product Page](https://www.xilinx.com/products/boards-and-kits/alveo/u50.html)
-- Vitis Tutorials Repository: [GitHub](https://github.com/Xilinx/Vitis-Tutorials)
+- Xilinx Runtime (XRT) Documentation: XRT Docs
+- Xilinx Alveo U50 Data Center Accelerator Card: Product Page
+- Vitis Tutorials Repository: GitHub
 
-Note: This tutorial assumes the use of Vitis 2022.1 and the corresponding tools. Adjustments may be necessary for other versions.
+Note: This tutorial assumes the use of Vitis 2020.2 and the corresponding tools. Adjustments may be necessary for other versions.
+
+If you have any questions or need further assistance with any step of the process, please don’t hesitate to ask!
