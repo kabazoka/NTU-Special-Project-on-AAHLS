@@ -1,4 +1,4 @@
-# **Matrix Multiplication Project using Vitis HLS for Xilinx U50**
+# AAHLS Lab#B Matrix Multiplication Project using Vitis HLS for Xilinx U50
 
 Lab #B of the course 2024-Fall-Application-Acceleration-with-High-Level-Synthesis at NTU
 
