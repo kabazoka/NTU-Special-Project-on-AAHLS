@@ -13,7 +13,7 @@
 						"AP_START": { "actual": "ap_start"}
 					}
 				},
-				"grp_matrix_mul_Pipeline_initC_initC_inner_fu_8994/grp_matrix_mul_Pipeline_initC_initC_inner_fu_8994_activity": {
+				"grp_matrix_mul_Pipeline_VITIS_LOOP_37_3_VITIS_LOOP_38_4_fu_2528/grp_matrix_mul_Pipeline_VITIS_LOOP_37_3_VITIS_LOOP_38_4_fu_2528_activity": {
 					"interface": "xilinx.com:interface:internal_hls_dataflow:1.0",
 					"ports": {
 						"AP_CLK": { "actual": "ap_clk"},
@@ -23,7 +23,7 @@
 						"AP_START": { "actual": "ap_start"}
 					}
 				},
-				"grp_matrix_mul_Pipeline_readA_inner_fu_8464/grp_matrix_mul_Pipeline_readA_inner_fu_8464_activity": {
+				"grp_matrix_mul_Pipeline_VITIS_LOOP_47_7_fu_2670/grp_matrix_mul_Pipeline_VITIS_LOOP_47_7_fu_2670_activity": {
 					"interface": "xilinx.com:interface:internal_hls_dataflow:1.0",
 					"ports": {
 						"AP_CLK": { "actual": "ap_clk"},
@@ -33,7 +33,7 @@
 						"AP_START": { "actual": "ap_start"}
 					}
 				},
-				"grp_matrix_mul_Pipeline_readB_inner_fu_8729/grp_matrix_mul_Pipeline_readB_inner_fu_8729_activity": {
+				"grp_matrix_mul_Pipeline_VITIS_LOOP_54_9_fu_2745/grp_matrix_mul_Pipeline_VITIS_LOOP_54_9_fu_2745_activity": {
 					"interface": "xilinx.com:interface:internal_hls_dataflow:1.0",
 					"ports": {
 						"AP_CLK": { "actual": "ap_clk"},
@@ -43,7 +43,17 @@
 						"AP_START": { "actual": "ap_start"}
 					}
 				},
-				"grp_matrix_mul_Pipeline_writeC_inner_fu_9001/grp_matrix_mul_Pipeline_writeC_inner_fu_9001_activity": {
+				"grp_matrix_mul_Pipeline_VITIS_LOOP_62_11_fu_2819/grp_matrix_mul_Pipeline_VITIS_LOOP_62_11_fu_2819_activity": {
+					"interface": "xilinx.com:interface:internal_hls_dataflow:1.0",
+					"ports": {
+						"AP_CLK": { "actual": "ap_clk"},
+						"AP_DONE": { "actual": "ap_done"},
+						"AP_READY": { "actual": "ap_ready"},
+						"AP_RESET": { "actual": "ap_rst"},
+						"AP_START": { "actual": "ap_start"}
+					}
+				},
+				"grp_matrix_mul_Pipeline_VITIS_LOOP_76_14_fu_2596/grp_matrix_mul_Pipeline_VITIS_LOOP_76_14_fu_2596_activity": {
 					"interface": "xilinx.com:interface:internal_hls_dataflow:1.0",
 					"ports": {
 						"AP_CLK": { "actual": "ap_clk"},

@@ -35,7 +35,7 @@ module matrix_mul_control_s_axi
     output wire [63:0]                   C,
     output wire [31:0]                   M,
     output wire [31:0]                   N,
-    output wire [31:0]                   K,
+    output wire [31:0]                   P,
     output wire                          ap_start,
     input  wire                          ap_done,
     input  wire                          ap_ready,
@@ -82,8 +82,8 @@ module matrix_mul_control_s_axi
 // 0x3c : Data signal of N
 //        bit 31~0 - N[31:0] (Read/Write)
 // 0x40 : reserved
-// 0x44 : Data signal of K
-//        bit 31~0 - K[31:0] (Read/Write)
+// 0x44 : Data signal of P
+//        bit 31~0 - P[31:0] (Read/Write)
 // 0x48 : reserved
 // (SC = Self Clear, COR = Clear on Read, TOW = Toggle on Write, COH = Clear on Handshake)
 
@@ -106,8 +106,8 @@ localparam
     ADDR_M_CTRL   = 7'h38,
     ADDR_N_DATA_0 = 7'h3c,
     ADDR_N_CTRL   = 7'h40,
-    ADDR_K_DATA_0 = 7'h44,
-    ADDR_K_CTRL   = 7'h48,
+    ADDR_P_DATA_0 = 7'h44,
+    ADDR_P_CTRL   = 7'h48,
     WRIDLE        = 2'd0,
     WRDATA        = 2'd1,
     WRRESP        = 2'd2,
@@ -149,7 +149,7 @@ localparam
     reg  [63:0]                   int_C = 'b0;
     reg  [31:0]                   int_M = 'b0;
     reg  [31:0]                   int_N = 'b0;
-    reg  [31:0]                   int_K = 'b0;
+    reg  [31:0]                   int_P = 'b0;
 
 //------------------------Instantiation------------------
 
@@ -283,8 +283,8 @@ always @(posedge ACLK) begin
                 ADDR_N_DATA_0: begin
                     rdata <= int_N[31:0];
                 end
-                ADDR_K_DATA_0: begin
-                    rdata <= int_K[31:0];
+                ADDR_P_DATA_0: begin
+                    rdata <= int_P[31:0];
                 end
             endcase
         end
@@ -303,7 +303,7 @@ assign B                 = int_B;
 assign C                 = int_C;
 assign M                 = int_M;
 assign N                 = int_N;
-assign K                 = int_K;
+assign P                 = int_P;
 // int_interrupt
 always @(posedge ACLK) begin
     if (ARESET)
@@ -516,13 +516,13 @@ always @(posedge ACLK) begin
     end
 end
 
-// int_K[31:0]
+// int_P[31:0]
 always @(posedge ACLK) begin
     if (ARESET)
-        int_K[31:0] <= 0;
+        int_P[31:0] <= 0;
     else if (ACLK_EN) begin
-        if (w_hs && waddr == ADDR_K_DATA_0)
-            int_K[31:0] <= (WDATA[31:0] & wmask) | (int_K[31:0] & ~wmask);
+        if (w_hs && waddr == ADDR_P_DATA_0)
+            int_P[31:0] <= (WDATA[31:0] & wmask) | (int_P[31:0] & ~wmask);
     end
 end
 

@@ -1,0 +1,472 @@
+
+
+================================================================
+== Vitis HLS Report for 'matrix_mul_Pipeline_VITIS_LOOP_47_7'
+================================================================
+* Date:           Wed Nov 20 15:30:09 2024
+
+* Version:        2022.1 (Build 3526262 on Mon Apr 18 15:47:01 MDT 2022)
+* Project:        matrix_mul_hls
+* Solution:       solution1 (Vivado IP Flow Target)
+* Product family: virtexuplus
+* Target device:  xcu50-fsvh2104-2-e
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+---------+----------+------------+
+    |  Clock |  Target | Estimated| Uncertainty|
+    +--------+---------+----------+------------+
+    |ap_clk  |  3.33 ns|  2.431 ns|     0.90 ns|
+    +--------+---------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+-----------+-----------+------+------+---------+
+    |  Latency (cycles) |   Latency (absolute)  |   Interval  | Pipeline|
+    |   min   |   max   |    min    |    max    |  min |  max |   Type  |
+    +---------+---------+-----------+-----------+------+------+---------+
+    |     4109|     4109|  13.683 us|  13.683 us|  4109|  4109|       no|
+    +---------+---------+-----------+-----------+------+------+---------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        +-----------------------------------+---------+---------+----------+-----------+-----------+------+----------+
+        |                                   |  Latency (cycles) | Iteration|  Initiation Interval  | Trip |          |
+        |             Loop Name             |   min   |   max   |  Latency |  achieved |   target  | Count| Pipelined|
+        +-----------------------------------+---------+---------+----------+-----------+-----------+------+----------+
+        |- VITIS_LOOP_46_6_VITIS_LOOP_47_7  |     4107|     4107|        13|          1|          1|  4096|       yes|
+        +-----------------------------------+---------+---------+----------+-----------+-----------+------+----------+
+
+============================================================
++ Verbose Summary: Synthesis Manager
+============================================================
+InlineROM: 1
+ExposeGlobal: 0
+============================================================
++ Verbose Summary: CDFG Model
+============================================================
+IsTopModel: 0
+ResetActiveHigh: 1
+IsCombinational: 0
+IsDatapathOnly: 0
+HasWiredReturn: 1
+HasMFsm: 2
+HasVarLatency: 1
+IsPipeline: 0
+IsRtlPipelined: 0
+IsInstanceOverlapped: 0
+IsDontTouch: 0
+HasImplIP: 0
+IsGatedGlobalClock: 0
+
++ Individual pipeline summary: 
+  * Pipeline-0: initiation interval (II) = 1, depth = 13
+
+
+============================================================
++ Verbose Summary: Schedule
+============================================================
+* Number of FSM states : 13
+* Pipeline : 1
+  Pipeline-0 : II = 1, D = 13, States = { 1 2 3 4 5 6 7 8 9 10 11 12 13 }
+* Dataflow Pipeline: 0
+
+* FSM state transitions: 
+1 --> 2 
+2 --> 3 
+3 --> 4 
+4 --> 5 
+5 --> 6 
+6 --> 7 
+7 --> 8 
+8 --> 9 
+9 --> 10 
+10 --> 11 
+11 --> 12 
+12 --> 13 
+13 --> 
+
+* FSM state operations: 
+
+State 1 <SV = 0> <Delay = 2.00>
+ST_1 : Operation 16 [1/1] (0.00ns)   --->   "%kk = alloca i32 1"   --->   Operation 16 'alloca' 'kk' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 17 [1/1] (0.00ns)   --->   "%ii = alloca i32 1"   --->   Operation 17 'alloca' 'ii' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 18 [1/1] (0.00ns)   --->   "%indvar_flatten142 = alloca i32 1"   --->   Operation 18 'alloca' 'indvar_flatten142' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 19 [1/1] (0.00ns)   --->   "%A_read = read i64 @_ssdm_op_Read.ap_auto.i64, i64 %A"   --->   Operation 19 'read' 'A_read' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 20 [1/1] (0.00ns)   --->   "%zext_ln44_read = read i32 @_ssdm_op_Read.ap_auto.i32, i32 %zext_ln44"   --->   Operation 20 'read' 'zext_ln44_read' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 21 [1/1] (0.00ns)   --->   "%zext_ln34_read = read i32 @_ssdm_op_Read.ap_auto.i32, i32 %zext_ln34"   --->   Operation 21 'read' 'zext_ln34_read' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 22 [1/1] (0.00ns)   --->   "%shl_ln35_1_mid2_read = read i31 @_ssdm_op_Read.ap_auto.i31, i31 %shl_ln35_1_mid2"   --->   Operation 22 'read' 'shl_ln35_1_mid2_read' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 23 [1/1] (0.00ns)   --->   "%zext_ln44_cast = zext i32 %zext_ln44_read"   --->   Operation 23 'zext' 'zext_ln44_cast' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 24 [1/1] (0.00ns)   --->   "%zext_ln34_cast = zext i32 %zext_ln34_read"   --->   Operation 24 'zext' 'zext_ln34_cast' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 25 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i32 %gmem0, void @empty_7, i32 0, i32 0, void @empty_8, i32 0, i32 0, void @empty_20, void @empty_21, void @empty_8, i32 16, i32 16, i32 16, i32 16, void @empty_8, void @empty_8, i32 4294967295, i32 0"   --->   Operation 25 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 26 [1/1] (0.38ns)   --->   "%store_ln0 = store i13 0, i13 %indvar_flatten142"   --->   Operation 26 'store' 'store_ln0' <Predicate = true> <Delay = 0.38>
+ST_1 : Operation 27 [1/1] (0.38ns)   --->   "%store_ln0 = store i7 0, i7 %ii"   --->   Operation 27 'store' 'store_ln0' <Predicate = true> <Delay = 0.38>
+ST_1 : Operation 28 [1/1] (0.38ns)   --->   "%store_ln0 = store i7 0, i7 %kk"   --->   Operation 28 'store' 'store_ln0' <Predicate = true> <Delay = 0.38>
+ST_1 : Operation 29 [1/1] (0.38ns)   --->   "%br_ln0 = br void %for.inc39"   --->   Operation 29 'br' 'br_ln0' <Predicate = true> <Delay = 0.38>
+ST_1 : Operation 30 [1/1] (0.00ns)   --->   "%first_iter_0 = phi i1 1, void %newFuncRoot, i1 0, void %arrayidx387.exit"   --->   Operation 30 'phi' 'first_iter_0' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 31 [1/1] (0.00ns)   --->   "%indvar_flatten142_load = load i13 %indvar_flatten142" [./src/matrix_mul.cpp:46]   --->   Operation 31 'load' 'indvar_flatten142_load' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 32 [1/1] (0.00ns)   --->   "%specbitsmap_ln0 = specbitsmap void @_ssdm_op_SpecBitsMap, i32 %gmem0"   --->   Operation 32 'specbitsmap' 'specbitsmap_ln0' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 33 [1/1] (0.64ns)   --->   "%icmp_ln46 = icmp_eq  i13 %indvar_flatten142_load, i13 4096" [./src/matrix_mul.cpp:46]   --->   Operation 33 'icmp' 'icmp_ln46' <Predicate = true> <Delay = 0.64> <CoreInst = "Cmp">   --->   Core 9 'Cmp' <Latency = 0> <II = 1> <Delay = 0.64> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 34 [1/1] (0.75ns)   --->   "%add_ln46 = add i13 %indvar_flatten142_load, i13 1" [./src/matrix_mul.cpp:46]   --->   Operation 34 'add' 'add_ln46' <Predicate = true> <Delay = 0.75> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.75> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 35 [1/1] (0.00ns)   --->   "%br_ln46 = br i1 %icmp_ln46, void %for.inc42, void %VITIS_LOOP_53_8.exitStub" [./src/matrix_mul.cpp:46]   --->   Operation 35 'br' 'br_ln46' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 36 [1/1] (0.00ns)   --->   "%kk_load = load i7 %kk" [./src/matrix_mul.cpp:47]   --->   Operation 36 'load' 'kk_load' <Predicate = (!icmp_ln46)> <Delay = 0.00>
+ST_1 : Operation 37 [1/1] (0.00ns)   --->   "%ii_load = load i7 %ii" [./src/matrix_mul.cpp:46]   --->   Operation 37 'load' 'ii_load' <Predicate = (!icmp_ln46)> <Delay = 0.00>
+ST_1 : Operation 38 [1/1] (0.59ns)   --->   "%icmp_ln47 = icmp_eq  i7 %kk_load, i7 64" [./src/matrix_mul.cpp:47]   --->   Operation 38 'icmp' 'icmp_ln47' <Predicate = (!icmp_ln46)> <Delay = 0.59> <CoreInst = "Cmp">   --->   Core 9 'Cmp' <Latency = 0> <II = 1> <Delay = 0.59> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 39 [1/1] (0.12ns)   --->   "%or_ln46 = or i1 %icmp_ln47, i1 %first_iter_0" [./src/matrix_mul.cpp:46]   --->   Operation 39 'or' 'or_ln46' <Predicate = (!icmp_ln46)> <Delay = 0.12> <CoreInst = "LogicGate">   --->   Core 74 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.12> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 40 [1/1] (0.30ns)   --->   "%select_ln46 = select i1 %icmp_ln47, i7 0, i7 %kk_load" [./src/matrix_mul.cpp:46]   --->   Operation 40 'select' 'select_ln46' <Predicate = (!icmp_ln46)> <Delay = 0.30> <CoreInst = "Sel">   --->   Core 73 'Sel' <Latency = 0> <II = 1> <Delay = 0.30> <FuncUnit> <Opcode : 'select'> <InPorts = 3> <OutPorts = 1>
+ST_1 : Operation 41 [1/1] (0.70ns)   --->   "%add_ln46_4 = add i7 %ii_load, i7 1" [./src/matrix_mul.cpp:46]   --->   Operation 41 'add' 'add_ln46_4' <Predicate = (!icmp_ln46)> <Delay = 0.70> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.70> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 42 [1/1] (0.30ns)   --->   "%select_ln46_1 = select i1 %icmp_ln47, i7 %add_ln46_4, i7 %ii_load" [./src/matrix_mul.cpp:46]   --->   Operation 42 'select' 'select_ln46_1' <Predicate = (!icmp_ln46)> <Delay = 0.30> <CoreInst = "Sel">   --->   Core 73 'Sel' <Latency = 0> <II = 1> <Delay = 0.30> <FuncUnit> <Opcode : 'select'> <InPorts = 3> <OutPorts = 1>
+ST_1 : Operation 43 [1/1] (0.00ns)   --->   "%zext_ln46_1 = zext i7 %select_ln46_1" [./src/matrix_mul.cpp:46]   --->   Operation 43 'zext' 'zext_ln46_1' <Predicate = (!icmp_ln46)> <Delay = 0.00>
+ST_1 : Operation 44 [1/1] (0.87ns)   --->   "%add_ln46_1 = add i31 %zext_ln46_1, i31 %shl_ln35_1_mid2_read" [./src/matrix_mul.cpp:46]   --->   Operation 44 'add' 'add_ln46_1' <Predicate = (!icmp_ln46)> <Delay = 0.87> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.87> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 45 [1/1] (0.00ns)   --->   "%br_ln47 = br i1 %or_ln46, void %for.inc39.split, void %for.first.iter.for.inc39" [./src/matrix_mul.cpp:47]   --->   Operation 45 'br' 'br_ln47' <Predicate = (!icmp_ln46)> <Delay = 0.00>
+ST_1 : Operation 46 [1/1] (0.00ns)   --->   "%trunc_ln49 = trunc i7 %select_ln46" [./src/matrix_mul.cpp:49]   --->   Operation 46 'trunc' 'trunc_ln49' <Predicate = (!icmp_ln46)> <Delay = 0.00>
+ST_1 : Operation 47 [1/1] (0.34ns)   --->   "%switch_ln49 = switch i6 %trunc_ln49, void %arrayidx387.case.63, i6 0, void %arrayidx387.case.0, i6 1, void %arrayidx387.case.1, i6 2, void %arrayidx387.case.2, i6 3, void %arrayidx387.case.3, i6 4, void %arrayidx387.case.4, i6 5, void %arrayidx387.case.5, i6 6, void %arrayidx387.case.6, i6 7, void %arrayidx387.case.7, i6 8, void %arrayidx387.case.8, i6 9, void %arrayidx387.case.9, i6 10, void %arrayidx387.case.10, i6 11, void %arrayidx387.case.11, i6 12, void %arrayidx387.case.12, i6 13, void %arrayidx387.case.13, i6 14, void %arrayidx387.case.14, i6 15, void %arrayidx387.case.15, i6 16, void %arrayidx387.case.16, i6 17, void %arrayidx387.case.17, i6 18, void %arrayidx387.case.18, i6 19, void %arrayidx387.case.19, i6 20, void %arrayidx387.case.20, i6 21, void %arrayidx387.case.21, i6 22, void %arrayidx387.case.22, i6 23, void %arrayidx387.case.23, i6 24, void %arrayidx387.case.24, i6 25, void %arrayidx387.case.25, i6 26, void %arrayidx387.case.26, i6 27, void %arrayidx387.case.27, i6 28, void %arrayidx387.case.28, i6 29, void %arrayidx387.case.29, i6 30, void %arrayidx387.case.30, i6 31, void %arrayidx387.case.31, i6 32, void %arrayidx387.case.32, i6 33, void %arrayidx387.case.33, i6 34, void %arrayidx387.case.34, i6 35, void %arrayidx387.case.35, i6 36, void %arrayidx387.case.36, i6 37, void %arrayidx387.case.37, i6 38, void %arrayidx387.case.38, i6 39, void %arrayidx387.case.39, i6 40, void %arrayidx387.case.40, i6 41, void %arrayidx387.case.41, i6 42, void %arrayidx387.case.42, i6 43, void %arrayidx387.case.43, i6 44, void %arrayidx387.case.44, i6 45, void %arrayidx387.case.45, i6 46, void %arrayidx387.case.46, i6 47, void %arrayidx387.case.47, i6 48, void %arrayidx387.case.48, i6 49, void %arrayidx387.case.49, i6 50, void %arrayidx387.case.50, i6 51, void %arrayidx387.case.51, i6 52, void %arrayidx387.case.52, i6 53, void %arrayidx387.case.53, i6 54, void %arrayidx387.case.54, i6 55, void %arrayidx387.case.55, i6 56, void %arrayidx387.case.56, i6 57, void %arrayidx387.case.57, i6 58, void %arrayidx387.case.58, i6 59, void %arrayidx387.case.59, i6 60, void %arrayidx387.case.60, i6 61, void %arrayidx387.case.61, i6 62, void %arrayidx387.case.62" [./src/matrix_mul.cpp:49]   --->   Operation 47 'switch' 'switch_ln49' <Predicate = (!icmp_ln46)> <Delay = 0.34>
+ST_1 : Operation 48 [1/1] (0.70ns)   --->   "%add_ln47 = add i7 %select_ln46, i7 1" [./src/matrix_mul.cpp:47]   --->   Operation 48 'add' 'add_ln47' <Predicate = (!icmp_ln46)> <Delay = 0.70> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.70> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 49 [1/1] (0.38ns)   --->   "%store_ln47 = store i13 %add_ln46, i13 %indvar_flatten142" [./src/matrix_mul.cpp:47]   --->   Operation 49 'store' 'store_ln47' <Predicate = (!icmp_ln46)> <Delay = 0.38>
+ST_1 : Operation 50 [1/1] (0.38ns)   --->   "%store_ln47 = store i7 %select_ln46_1, i7 %ii" [./src/matrix_mul.cpp:47]   --->   Operation 50 'store' 'store_ln47' <Predicate = (!icmp_ln46)> <Delay = 0.38>
+ST_1 : Operation 51 [1/1] (0.38ns)   --->   "%store_ln47 = store i7 %add_ln47, i7 %kk" [./src/matrix_mul.cpp:47]   --->   Operation 51 'store' 'store_ln47' <Predicate = (!icmp_ln46)> <Delay = 0.38>
+ST_1 : Operation 52 [1/1] (0.00ns)   --->   "%br_ln47 = br void %for.inc39" [./src/matrix_mul.cpp:47]   --->   Operation 52 'br' 'br_ln47' <Predicate = (!icmp_ln46)> <Delay = 0.00>
+
+State 2 <SV = 1> <Delay = 2.29>
+ST_2 : Operation 53 [1/1] (0.00ns)   --->   "%zext_ln46_2 = zext i31 %add_ln46_1" [./src/matrix_mul.cpp:46]   --->   Operation 53 'zext' 'zext_ln46_2' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 54 [2/2] (2.29ns)   --->   "%mul_ln46 = mul i62 %zext_ln46_2, i62 %zext_ln34_cast" [./src/matrix_mul.cpp:46]   --->   Operation 54 'mul' 'mul_ln46' <Predicate = true> <Delay = 2.29> <CoreInst = "Multiplier">   --->   Core 3 'Multiplier' <Latency = 1> <II = 1> <Delay = 2.29> <FuncUnit> <Opcode : 'mul'> <InPorts = 2> <OutPorts = 1>
+
+State 3 <SV = 2> <Delay = 2.29>
+ST_3 : Operation 55 [1/2] (2.29ns)   --->   "%mul_ln46 = mul i62 %zext_ln46_2, i62 %zext_ln34_cast" [./src/matrix_mul.cpp:46]   --->   Operation 55 'mul' 'mul_ln46' <Predicate = true> <Delay = 2.29> <CoreInst = "Multiplier">   --->   Core 3 'Multiplier' <Latency = 1> <II = 1> <Delay = 2.29> <FuncUnit> <Opcode : 'mul'> <InPorts = 2> <OutPorts = 1>
+
+State 4 <SV = 3> <Delay = 2.26>
+ST_4 : Operation 56 [1/1] (1.12ns)   --->   "%add_ln46_2 = add i62 %mul_ln46, i62 %zext_ln44_cast" [./src/matrix_mul.cpp:46]   --->   Operation 56 'add' 'add_ln46_2' <Predicate = true> <Delay = 1.12> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 1.12> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 57 [1/1] (0.00ns)   --->   "%sext_ln47_mid2_v_v_v_v = bitconcatenate i64 @_ssdm_op_BitConcatenate.i64.i62.i2, i62 %add_ln46_2, i2 0" [./src/matrix_mul.cpp:46]   --->   Operation 57 'bitconcatenate' 'sext_ln47_mid2_v_v_v_v' <Predicate = true> <Delay = 0.00>
+ST_4 : Operation 58 [1/1] (1.14ns)   --->   "%add_ln46_3 = add i64 %sext_ln47_mid2_v_v_v_v, i64 %A_read" [./src/matrix_mul.cpp:46]   --->   Operation 58 'add' 'add_ln46_3' <Predicate = true> <Delay = 1.14> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 1.14> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 59 [1/1] (0.00ns)   --->   "%sext_ln47_mid2_v = partselect i62 @_ssdm_op_PartSelect.i62.i64.i32.i32, i64 %add_ln46_3, i32 2, i32 63" [./src/matrix_mul.cpp:46]   --->   Operation 59 'partselect' 'sext_ln47_mid2_v' <Predicate = true> <Delay = 0.00>
+
+State 5 <SV = 4> <Delay = 2.43>
+ST_5 : Operation 60 [1/1] (0.00ns)   --->   "%sext_ln46 = sext i62 %sext_ln47_mid2_v" [./src/matrix_mul.cpp:46]   --->   Operation 60 'sext' 'sext_ln46' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 61 [1/1] (0.00ns)   --->   "%gmem0_addr = getelementptr i32 %gmem0, i64 %sext_ln46" [./src/matrix_mul.cpp:47]   --->   Operation 61 'getelementptr' 'gmem0_addr' <Predicate = (or_ln46)> <Delay = 0.00>
+ST_5 : Operation 62 [7/7] (2.43ns)   --->   "%empty = readreq i1 @_ssdm_op_ReadReq.m_axi.p1i32, i32 %gmem0_addr, i32 64" [./src/matrix_mul.cpp:47]   --->   Operation 62 'readreq' 'empty' <Predicate = (or_ln46)> <Delay = 2.43> <CoreInst = "m_axi">   --->   Core 121 'm_axi' <Latency = 0> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_5 : Operation 63 [1/1] (0.00ns)   --->   "%gmem0_addr_1 = getelementptr i32 %gmem0, i64 %sext_ln46" [./src/matrix_mul.cpp:47]   --->   Operation 63 'getelementptr' 'gmem0_addr_1' <Predicate = true> <Delay = 0.00>
+
+State 6 <SV = 5> <Delay = 2.43>
+ST_6 : Operation 64 [6/7] (2.43ns)   --->   "%empty = readreq i1 @_ssdm_op_ReadReq.m_axi.p1i32, i32 %gmem0_addr, i32 64" [./src/matrix_mul.cpp:47]   --->   Operation 64 'readreq' 'empty' <Predicate = (or_ln46)> <Delay = 2.43> <CoreInst = "m_axi">   --->   Core 121 'm_axi' <Latency = 0> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 7 <SV = 6> <Delay = 2.43>
+ST_7 : Operation 65 [5/7] (2.43ns)   --->   "%empty = readreq i1 @_ssdm_op_ReadReq.m_axi.p1i32, i32 %gmem0_addr, i32 64" [./src/matrix_mul.cpp:47]   --->   Operation 65 'readreq' 'empty' <Predicate = (or_ln46)> <Delay = 2.43> <CoreInst = "m_axi">   --->   Core 121 'm_axi' <Latency = 0> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 8 <SV = 7> <Delay = 2.43>
+ST_8 : Operation 66 [4/7] (2.43ns)   --->   "%empty = readreq i1 @_ssdm_op_ReadReq.m_axi.p1i32, i32 %gmem0_addr, i32 64" [./src/matrix_mul.cpp:47]   --->   Operation 66 'readreq' 'empty' <Predicate = (or_ln46)> <Delay = 2.43> <CoreInst = "m_axi">   --->   Core 121 'm_axi' <Latency = 0> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 9 <SV = 8> <Delay = 2.43>
+ST_9 : Operation 67 [3/7] (2.43ns)   --->   "%empty = readreq i1 @_ssdm_op_ReadReq.m_axi.p1i32, i32 %gmem0_addr, i32 64" [./src/matrix_mul.cpp:47]   --->   Operation 67 'readreq' 'empty' <Predicate = (or_ln46)> <Delay = 2.43> <CoreInst = "m_axi">   --->   Core 121 'm_axi' <Latency = 0> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 10 <SV = 9> <Delay = 2.43>
+ST_10 : Operation 68 [2/7] (2.43ns)   --->   "%empty = readreq i1 @_ssdm_op_ReadReq.m_axi.p1i32, i32 %gmem0_addr, i32 64" [./src/matrix_mul.cpp:47]   --->   Operation 68 'readreq' 'empty' <Predicate = (or_ln46)> <Delay = 2.43> <CoreInst = "m_axi">   --->   Core 121 'm_axi' <Latency = 0> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 11 <SV = 10> <Delay = 2.43>
+ST_11 : Operation 69 [1/7] (2.43ns)   --->   "%empty = readreq i1 @_ssdm_op_ReadReq.m_axi.p1i32, i32 %gmem0_addr, i32 64" [./src/matrix_mul.cpp:47]   --->   Operation 69 'readreq' 'empty' <Predicate = (or_ln46)> <Delay = 2.43> <CoreInst = "m_axi">   --->   Core 121 'm_axi' <Latency = 0> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_11 : Operation 70 [1/1] (0.00ns)   --->   "%br_ln47 = br void %for.inc39.split" [./src/matrix_mul.cpp:47]   --->   Operation 70 'br' 'br_ln47' <Predicate = (or_ln46)> <Delay = 0.00>
+
+State 12 <SV = 11> <Delay = 2.43>
+ST_12 : Operation 71 [1/1] (0.00ns)   --->   "%specpipeline_ln48 = specpipeline void @_ssdm_op_SpecPipeline, i32 1, i32 0, i32 0, i32 0, void @empty_8" [./src/matrix_mul.cpp:48]   --->   Operation 71 'specpipeline' 'specpipeline_ln48' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 72 [1/1] (0.00ns)   --->   "%specloopname_ln47 = specloopname void @_ssdm_op_SpecLoopName, void @empty_16" [./src/matrix_mul.cpp:47]   --->   Operation 72 'specloopname' 'specloopname_ln47' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 73 [1/1] (2.43ns)   --->   "%gmem0_addr_1_read = read i32 @_ssdm_op_Read.m_axi.p1i32, i32 %gmem0_addr_1" [./src/matrix_mul.cpp:49]   --->   Operation 73 'read' 'gmem0_addr_1_read' <Predicate = true> <Delay = 2.43> <CoreInst = "m_axi">   --->   Core 121 'm_axi' <Latency = 0> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_12 : Operation 74 [1/1] (0.00ns)   --->   "%bitcast_ln49 = bitcast i32 %gmem0_addr_1_read" [./src/matrix_mul.cpp:49]   --->   Operation 74 'bitcast' 'bitcast_ln49' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 270 [1/1] (0.00ns)   --->   "%ret_ln0 = ret"   --->   Operation 270 'ret' 'ret_ln0' <Predicate = (icmp_ln46)> <Delay = 0.00>
+
+State 13 <SV = 12> <Delay = 0.69>
+ST_13 : Operation 75 [1/1] (0.00ns)   --->   "%specloopname_ln0 = specloopname void @_ssdm_op_SpecLoopName, void @VITIS_LOOP_46_6_VITIS_LOOP_47_7_str"   --->   Operation 75 'specloopname' 'specloopname_ln0' <Predicate = true> <Delay = 0.00>
+ST_13 : Operation 76 [1/1] (0.00ns)   --->   "%empty_36 = speclooptripcount i32 @_ssdm_op_SpecLoopTripCount, i64 4096, i64 4096, i64 4096"   --->   Operation 76 'speclooptripcount' 'empty_36' <Predicate = true> <Delay = 0.00>
+ST_13 : Operation 77 [1/1] (0.00ns)   --->   "%zext_ln46 = zext i7 %select_ln46_1" [./src/matrix_mul.cpp:46]   --->   Operation 77 'zext' 'zext_ln46' <Predicate = true> <Delay = 0.00>
+ST_13 : Operation 78 [1/1] (0.00ns)   --->   "%local_A_62_addr = getelementptr i32 %local_A_62, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 78 'getelementptr' 'local_A_62_addr' <Predicate = (trunc_ln49 == 62)> <Delay = 0.00>
+ST_13 : Operation 79 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_62_addr" [./src/matrix_mul.cpp:49]   --->   Operation 79 'store' 'store_ln49' <Predicate = (trunc_ln49 == 62)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 80 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 80 'br' 'br_ln49' <Predicate = (trunc_ln49 == 62)> <Delay = 0.00>
+ST_13 : Operation 81 [1/1] (0.00ns)   --->   "%local_A_61_addr = getelementptr i32 %local_A_61, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 81 'getelementptr' 'local_A_61_addr' <Predicate = (trunc_ln49 == 61)> <Delay = 0.00>
+ST_13 : Operation 82 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_61_addr" [./src/matrix_mul.cpp:49]   --->   Operation 82 'store' 'store_ln49' <Predicate = (trunc_ln49 == 61)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 83 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 83 'br' 'br_ln49' <Predicate = (trunc_ln49 == 61)> <Delay = 0.00>
+ST_13 : Operation 84 [1/1] (0.00ns)   --->   "%local_A_60_addr = getelementptr i32 %local_A_60, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 84 'getelementptr' 'local_A_60_addr' <Predicate = (trunc_ln49 == 60)> <Delay = 0.00>
+ST_13 : Operation 85 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_60_addr" [./src/matrix_mul.cpp:49]   --->   Operation 85 'store' 'store_ln49' <Predicate = (trunc_ln49 == 60)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 86 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 86 'br' 'br_ln49' <Predicate = (trunc_ln49 == 60)> <Delay = 0.00>
+ST_13 : Operation 87 [1/1] (0.00ns)   --->   "%local_A_59_addr = getelementptr i32 %local_A_59, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 87 'getelementptr' 'local_A_59_addr' <Predicate = (trunc_ln49 == 59)> <Delay = 0.00>
+ST_13 : Operation 88 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_59_addr" [./src/matrix_mul.cpp:49]   --->   Operation 88 'store' 'store_ln49' <Predicate = (trunc_ln49 == 59)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 89 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 89 'br' 'br_ln49' <Predicate = (trunc_ln49 == 59)> <Delay = 0.00>
+ST_13 : Operation 90 [1/1] (0.00ns)   --->   "%local_A_58_addr = getelementptr i32 %local_A_58, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 90 'getelementptr' 'local_A_58_addr' <Predicate = (trunc_ln49 == 58)> <Delay = 0.00>
+ST_13 : Operation 91 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_58_addr" [./src/matrix_mul.cpp:49]   --->   Operation 91 'store' 'store_ln49' <Predicate = (trunc_ln49 == 58)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 92 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 92 'br' 'br_ln49' <Predicate = (trunc_ln49 == 58)> <Delay = 0.00>
+ST_13 : Operation 93 [1/1] (0.00ns)   --->   "%local_A_57_addr = getelementptr i32 %local_A_57, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 93 'getelementptr' 'local_A_57_addr' <Predicate = (trunc_ln49 == 57)> <Delay = 0.00>
+ST_13 : Operation 94 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_57_addr" [./src/matrix_mul.cpp:49]   --->   Operation 94 'store' 'store_ln49' <Predicate = (trunc_ln49 == 57)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 95 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 95 'br' 'br_ln49' <Predicate = (trunc_ln49 == 57)> <Delay = 0.00>
+ST_13 : Operation 96 [1/1] (0.00ns)   --->   "%local_A_56_addr = getelementptr i32 %local_A_56, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 96 'getelementptr' 'local_A_56_addr' <Predicate = (trunc_ln49 == 56)> <Delay = 0.00>
+ST_13 : Operation 97 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_56_addr" [./src/matrix_mul.cpp:49]   --->   Operation 97 'store' 'store_ln49' <Predicate = (trunc_ln49 == 56)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 98 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 98 'br' 'br_ln49' <Predicate = (trunc_ln49 == 56)> <Delay = 0.00>
+ST_13 : Operation 99 [1/1] (0.00ns)   --->   "%local_A_55_addr = getelementptr i32 %local_A_55, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 99 'getelementptr' 'local_A_55_addr' <Predicate = (trunc_ln49 == 55)> <Delay = 0.00>
+ST_13 : Operation 100 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_55_addr" [./src/matrix_mul.cpp:49]   --->   Operation 100 'store' 'store_ln49' <Predicate = (trunc_ln49 == 55)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 101 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 101 'br' 'br_ln49' <Predicate = (trunc_ln49 == 55)> <Delay = 0.00>
+ST_13 : Operation 102 [1/1] (0.00ns)   --->   "%local_A_54_addr = getelementptr i32 %local_A_54, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 102 'getelementptr' 'local_A_54_addr' <Predicate = (trunc_ln49 == 54)> <Delay = 0.00>
+ST_13 : Operation 103 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_54_addr" [./src/matrix_mul.cpp:49]   --->   Operation 103 'store' 'store_ln49' <Predicate = (trunc_ln49 == 54)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 104 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 104 'br' 'br_ln49' <Predicate = (trunc_ln49 == 54)> <Delay = 0.00>
+ST_13 : Operation 105 [1/1] (0.00ns)   --->   "%local_A_53_addr = getelementptr i32 %local_A_53, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 105 'getelementptr' 'local_A_53_addr' <Predicate = (trunc_ln49 == 53)> <Delay = 0.00>
+ST_13 : Operation 106 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_53_addr" [./src/matrix_mul.cpp:49]   --->   Operation 106 'store' 'store_ln49' <Predicate = (trunc_ln49 == 53)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 107 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 107 'br' 'br_ln49' <Predicate = (trunc_ln49 == 53)> <Delay = 0.00>
+ST_13 : Operation 108 [1/1] (0.00ns)   --->   "%local_A_52_addr = getelementptr i32 %local_A_52, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 108 'getelementptr' 'local_A_52_addr' <Predicate = (trunc_ln49 == 52)> <Delay = 0.00>
+ST_13 : Operation 109 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_52_addr" [./src/matrix_mul.cpp:49]   --->   Operation 109 'store' 'store_ln49' <Predicate = (trunc_ln49 == 52)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 110 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 110 'br' 'br_ln49' <Predicate = (trunc_ln49 == 52)> <Delay = 0.00>
+ST_13 : Operation 111 [1/1] (0.00ns)   --->   "%local_A_51_addr = getelementptr i32 %local_A_51, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 111 'getelementptr' 'local_A_51_addr' <Predicate = (trunc_ln49 == 51)> <Delay = 0.00>
+ST_13 : Operation 112 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_51_addr" [./src/matrix_mul.cpp:49]   --->   Operation 112 'store' 'store_ln49' <Predicate = (trunc_ln49 == 51)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 113 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 113 'br' 'br_ln49' <Predicate = (trunc_ln49 == 51)> <Delay = 0.00>
+ST_13 : Operation 114 [1/1] (0.00ns)   --->   "%local_A_50_addr = getelementptr i32 %local_A_50, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 114 'getelementptr' 'local_A_50_addr' <Predicate = (trunc_ln49 == 50)> <Delay = 0.00>
+ST_13 : Operation 115 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_50_addr" [./src/matrix_mul.cpp:49]   --->   Operation 115 'store' 'store_ln49' <Predicate = (trunc_ln49 == 50)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 116 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 116 'br' 'br_ln49' <Predicate = (trunc_ln49 == 50)> <Delay = 0.00>
+ST_13 : Operation 117 [1/1] (0.00ns)   --->   "%local_A_49_addr = getelementptr i32 %local_A_49, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 117 'getelementptr' 'local_A_49_addr' <Predicate = (trunc_ln49 == 49)> <Delay = 0.00>
+ST_13 : Operation 118 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_49_addr" [./src/matrix_mul.cpp:49]   --->   Operation 118 'store' 'store_ln49' <Predicate = (trunc_ln49 == 49)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 119 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 119 'br' 'br_ln49' <Predicate = (trunc_ln49 == 49)> <Delay = 0.00>
+ST_13 : Operation 120 [1/1] (0.00ns)   --->   "%local_A_48_addr = getelementptr i32 %local_A_48, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 120 'getelementptr' 'local_A_48_addr' <Predicate = (trunc_ln49 == 48)> <Delay = 0.00>
+ST_13 : Operation 121 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_48_addr" [./src/matrix_mul.cpp:49]   --->   Operation 121 'store' 'store_ln49' <Predicate = (trunc_ln49 == 48)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 122 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 122 'br' 'br_ln49' <Predicate = (trunc_ln49 == 48)> <Delay = 0.00>
+ST_13 : Operation 123 [1/1] (0.00ns)   --->   "%local_A_47_addr = getelementptr i32 %local_A_47, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 123 'getelementptr' 'local_A_47_addr' <Predicate = (trunc_ln49 == 47)> <Delay = 0.00>
+ST_13 : Operation 124 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_47_addr" [./src/matrix_mul.cpp:49]   --->   Operation 124 'store' 'store_ln49' <Predicate = (trunc_ln49 == 47)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 125 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 125 'br' 'br_ln49' <Predicate = (trunc_ln49 == 47)> <Delay = 0.00>
+ST_13 : Operation 126 [1/1] (0.00ns)   --->   "%local_A_46_addr = getelementptr i32 %local_A_46, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 126 'getelementptr' 'local_A_46_addr' <Predicate = (trunc_ln49 == 46)> <Delay = 0.00>
+ST_13 : Operation 127 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_46_addr" [./src/matrix_mul.cpp:49]   --->   Operation 127 'store' 'store_ln49' <Predicate = (trunc_ln49 == 46)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 128 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 128 'br' 'br_ln49' <Predicate = (trunc_ln49 == 46)> <Delay = 0.00>
+ST_13 : Operation 129 [1/1] (0.00ns)   --->   "%local_A_45_addr = getelementptr i32 %local_A_45, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 129 'getelementptr' 'local_A_45_addr' <Predicate = (trunc_ln49 == 45)> <Delay = 0.00>
+ST_13 : Operation 130 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_45_addr" [./src/matrix_mul.cpp:49]   --->   Operation 130 'store' 'store_ln49' <Predicate = (trunc_ln49 == 45)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 131 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 131 'br' 'br_ln49' <Predicate = (trunc_ln49 == 45)> <Delay = 0.00>
+ST_13 : Operation 132 [1/1] (0.00ns)   --->   "%local_A_44_addr = getelementptr i32 %local_A_44, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 132 'getelementptr' 'local_A_44_addr' <Predicate = (trunc_ln49 == 44)> <Delay = 0.00>
+ST_13 : Operation 133 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_44_addr" [./src/matrix_mul.cpp:49]   --->   Operation 133 'store' 'store_ln49' <Predicate = (trunc_ln49 == 44)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 134 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 134 'br' 'br_ln49' <Predicate = (trunc_ln49 == 44)> <Delay = 0.00>
+ST_13 : Operation 135 [1/1] (0.00ns)   --->   "%local_A_43_addr = getelementptr i32 %local_A_43, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 135 'getelementptr' 'local_A_43_addr' <Predicate = (trunc_ln49 == 43)> <Delay = 0.00>
+ST_13 : Operation 136 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_43_addr" [./src/matrix_mul.cpp:49]   --->   Operation 136 'store' 'store_ln49' <Predicate = (trunc_ln49 == 43)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 137 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 137 'br' 'br_ln49' <Predicate = (trunc_ln49 == 43)> <Delay = 0.00>
+ST_13 : Operation 138 [1/1] (0.00ns)   --->   "%local_A_42_addr = getelementptr i32 %local_A_42, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 138 'getelementptr' 'local_A_42_addr' <Predicate = (trunc_ln49 == 42)> <Delay = 0.00>
+ST_13 : Operation 139 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_42_addr" [./src/matrix_mul.cpp:49]   --->   Operation 139 'store' 'store_ln49' <Predicate = (trunc_ln49 == 42)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 140 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 140 'br' 'br_ln49' <Predicate = (trunc_ln49 == 42)> <Delay = 0.00>
+ST_13 : Operation 141 [1/1] (0.00ns)   --->   "%local_A_41_addr = getelementptr i32 %local_A_41, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 141 'getelementptr' 'local_A_41_addr' <Predicate = (trunc_ln49 == 41)> <Delay = 0.00>
+ST_13 : Operation 142 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_41_addr" [./src/matrix_mul.cpp:49]   --->   Operation 142 'store' 'store_ln49' <Predicate = (trunc_ln49 == 41)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 143 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 143 'br' 'br_ln49' <Predicate = (trunc_ln49 == 41)> <Delay = 0.00>
+ST_13 : Operation 144 [1/1] (0.00ns)   --->   "%local_A_40_addr = getelementptr i32 %local_A_40, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 144 'getelementptr' 'local_A_40_addr' <Predicate = (trunc_ln49 == 40)> <Delay = 0.00>
+ST_13 : Operation 145 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_40_addr" [./src/matrix_mul.cpp:49]   --->   Operation 145 'store' 'store_ln49' <Predicate = (trunc_ln49 == 40)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 146 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 146 'br' 'br_ln49' <Predicate = (trunc_ln49 == 40)> <Delay = 0.00>
+ST_13 : Operation 147 [1/1] (0.00ns)   --->   "%local_A_39_addr = getelementptr i32 %local_A_39, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 147 'getelementptr' 'local_A_39_addr' <Predicate = (trunc_ln49 == 39)> <Delay = 0.00>
+ST_13 : Operation 148 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_39_addr" [./src/matrix_mul.cpp:49]   --->   Operation 148 'store' 'store_ln49' <Predicate = (trunc_ln49 == 39)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 149 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 149 'br' 'br_ln49' <Predicate = (trunc_ln49 == 39)> <Delay = 0.00>
+ST_13 : Operation 150 [1/1] (0.00ns)   --->   "%local_A_38_addr = getelementptr i32 %local_A_38, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 150 'getelementptr' 'local_A_38_addr' <Predicate = (trunc_ln49 == 38)> <Delay = 0.00>
+ST_13 : Operation 151 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_38_addr" [./src/matrix_mul.cpp:49]   --->   Operation 151 'store' 'store_ln49' <Predicate = (trunc_ln49 == 38)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 152 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 152 'br' 'br_ln49' <Predicate = (trunc_ln49 == 38)> <Delay = 0.00>
+ST_13 : Operation 153 [1/1] (0.00ns)   --->   "%local_A_37_addr = getelementptr i32 %local_A_37, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 153 'getelementptr' 'local_A_37_addr' <Predicate = (trunc_ln49 == 37)> <Delay = 0.00>
+ST_13 : Operation 154 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_37_addr" [./src/matrix_mul.cpp:49]   --->   Operation 154 'store' 'store_ln49' <Predicate = (trunc_ln49 == 37)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 155 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 155 'br' 'br_ln49' <Predicate = (trunc_ln49 == 37)> <Delay = 0.00>
+ST_13 : Operation 156 [1/1] (0.00ns)   --->   "%local_A_36_addr = getelementptr i32 %local_A_36, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 156 'getelementptr' 'local_A_36_addr' <Predicate = (trunc_ln49 == 36)> <Delay = 0.00>
+ST_13 : Operation 157 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_36_addr" [./src/matrix_mul.cpp:49]   --->   Operation 157 'store' 'store_ln49' <Predicate = (trunc_ln49 == 36)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 158 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 158 'br' 'br_ln49' <Predicate = (trunc_ln49 == 36)> <Delay = 0.00>
+ST_13 : Operation 159 [1/1] (0.00ns)   --->   "%local_A_35_addr = getelementptr i32 %local_A_35, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 159 'getelementptr' 'local_A_35_addr' <Predicate = (trunc_ln49 == 35)> <Delay = 0.00>
+ST_13 : Operation 160 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_35_addr" [./src/matrix_mul.cpp:49]   --->   Operation 160 'store' 'store_ln49' <Predicate = (trunc_ln49 == 35)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 161 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 161 'br' 'br_ln49' <Predicate = (trunc_ln49 == 35)> <Delay = 0.00>
+ST_13 : Operation 162 [1/1] (0.00ns)   --->   "%local_A_34_addr = getelementptr i32 %local_A_34, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 162 'getelementptr' 'local_A_34_addr' <Predicate = (trunc_ln49 == 34)> <Delay = 0.00>
+ST_13 : Operation 163 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_34_addr" [./src/matrix_mul.cpp:49]   --->   Operation 163 'store' 'store_ln49' <Predicate = (trunc_ln49 == 34)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 164 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 164 'br' 'br_ln49' <Predicate = (trunc_ln49 == 34)> <Delay = 0.00>
+ST_13 : Operation 165 [1/1] (0.00ns)   --->   "%local_A_33_addr = getelementptr i32 %local_A_33, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 165 'getelementptr' 'local_A_33_addr' <Predicate = (trunc_ln49 == 33)> <Delay = 0.00>
+ST_13 : Operation 166 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_33_addr" [./src/matrix_mul.cpp:49]   --->   Operation 166 'store' 'store_ln49' <Predicate = (trunc_ln49 == 33)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 167 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 167 'br' 'br_ln49' <Predicate = (trunc_ln49 == 33)> <Delay = 0.00>
+ST_13 : Operation 168 [1/1] (0.00ns)   --->   "%local_A_32_addr = getelementptr i32 %local_A_32, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 168 'getelementptr' 'local_A_32_addr' <Predicate = (trunc_ln49 == 32)> <Delay = 0.00>
+ST_13 : Operation 169 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_32_addr" [./src/matrix_mul.cpp:49]   --->   Operation 169 'store' 'store_ln49' <Predicate = (trunc_ln49 == 32)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 170 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 170 'br' 'br_ln49' <Predicate = (trunc_ln49 == 32)> <Delay = 0.00>
+ST_13 : Operation 171 [1/1] (0.00ns)   --->   "%local_A_31_addr = getelementptr i32 %local_A_31, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 171 'getelementptr' 'local_A_31_addr' <Predicate = (trunc_ln49 == 31)> <Delay = 0.00>
+ST_13 : Operation 172 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_31_addr" [./src/matrix_mul.cpp:49]   --->   Operation 172 'store' 'store_ln49' <Predicate = (trunc_ln49 == 31)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 173 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 173 'br' 'br_ln49' <Predicate = (trunc_ln49 == 31)> <Delay = 0.00>
+ST_13 : Operation 174 [1/1] (0.00ns)   --->   "%local_A_30_addr = getelementptr i32 %local_A_30, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 174 'getelementptr' 'local_A_30_addr' <Predicate = (trunc_ln49 == 30)> <Delay = 0.00>
+ST_13 : Operation 175 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_30_addr" [./src/matrix_mul.cpp:49]   --->   Operation 175 'store' 'store_ln49' <Predicate = (trunc_ln49 == 30)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 176 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 176 'br' 'br_ln49' <Predicate = (trunc_ln49 == 30)> <Delay = 0.00>
+ST_13 : Operation 177 [1/1] (0.00ns)   --->   "%local_A_29_addr = getelementptr i32 %local_A_29, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 177 'getelementptr' 'local_A_29_addr' <Predicate = (trunc_ln49 == 29)> <Delay = 0.00>
+ST_13 : Operation 178 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_29_addr" [./src/matrix_mul.cpp:49]   --->   Operation 178 'store' 'store_ln49' <Predicate = (trunc_ln49 == 29)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 179 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 179 'br' 'br_ln49' <Predicate = (trunc_ln49 == 29)> <Delay = 0.00>
+ST_13 : Operation 180 [1/1] (0.00ns)   --->   "%local_A_28_addr = getelementptr i32 %local_A_28, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 180 'getelementptr' 'local_A_28_addr' <Predicate = (trunc_ln49 == 28)> <Delay = 0.00>
+ST_13 : Operation 181 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_28_addr" [./src/matrix_mul.cpp:49]   --->   Operation 181 'store' 'store_ln49' <Predicate = (trunc_ln49 == 28)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 182 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 182 'br' 'br_ln49' <Predicate = (trunc_ln49 == 28)> <Delay = 0.00>
+ST_13 : Operation 183 [1/1] (0.00ns)   --->   "%local_A_27_addr = getelementptr i32 %local_A_27, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 183 'getelementptr' 'local_A_27_addr' <Predicate = (trunc_ln49 == 27)> <Delay = 0.00>
+ST_13 : Operation 184 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_27_addr" [./src/matrix_mul.cpp:49]   --->   Operation 184 'store' 'store_ln49' <Predicate = (trunc_ln49 == 27)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 185 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 185 'br' 'br_ln49' <Predicate = (trunc_ln49 == 27)> <Delay = 0.00>
+ST_13 : Operation 186 [1/1] (0.00ns)   --->   "%local_A_26_addr = getelementptr i32 %local_A_26, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 186 'getelementptr' 'local_A_26_addr' <Predicate = (trunc_ln49 == 26)> <Delay = 0.00>
+ST_13 : Operation 187 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_26_addr" [./src/matrix_mul.cpp:49]   --->   Operation 187 'store' 'store_ln49' <Predicate = (trunc_ln49 == 26)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 188 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 188 'br' 'br_ln49' <Predicate = (trunc_ln49 == 26)> <Delay = 0.00>
+ST_13 : Operation 189 [1/1] (0.00ns)   --->   "%local_A_25_addr = getelementptr i32 %local_A_25, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 189 'getelementptr' 'local_A_25_addr' <Predicate = (trunc_ln49 == 25)> <Delay = 0.00>
+ST_13 : Operation 190 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_25_addr" [./src/matrix_mul.cpp:49]   --->   Operation 190 'store' 'store_ln49' <Predicate = (trunc_ln49 == 25)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 191 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 191 'br' 'br_ln49' <Predicate = (trunc_ln49 == 25)> <Delay = 0.00>
+ST_13 : Operation 192 [1/1] (0.00ns)   --->   "%local_A_24_addr = getelementptr i32 %local_A_24, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 192 'getelementptr' 'local_A_24_addr' <Predicate = (trunc_ln49 == 24)> <Delay = 0.00>
+ST_13 : Operation 193 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_24_addr" [./src/matrix_mul.cpp:49]   --->   Operation 193 'store' 'store_ln49' <Predicate = (trunc_ln49 == 24)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 194 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 194 'br' 'br_ln49' <Predicate = (trunc_ln49 == 24)> <Delay = 0.00>
+ST_13 : Operation 195 [1/1] (0.00ns)   --->   "%local_A_23_addr = getelementptr i32 %local_A_23, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 195 'getelementptr' 'local_A_23_addr' <Predicate = (trunc_ln49 == 23)> <Delay = 0.00>
+ST_13 : Operation 196 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_23_addr" [./src/matrix_mul.cpp:49]   --->   Operation 196 'store' 'store_ln49' <Predicate = (trunc_ln49 == 23)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 197 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 197 'br' 'br_ln49' <Predicate = (trunc_ln49 == 23)> <Delay = 0.00>
+ST_13 : Operation 198 [1/1] (0.00ns)   --->   "%local_A_22_addr = getelementptr i32 %local_A_22, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 198 'getelementptr' 'local_A_22_addr' <Predicate = (trunc_ln49 == 22)> <Delay = 0.00>
+ST_13 : Operation 199 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_22_addr" [./src/matrix_mul.cpp:49]   --->   Operation 199 'store' 'store_ln49' <Predicate = (trunc_ln49 == 22)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 200 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 200 'br' 'br_ln49' <Predicate = (trunc_ln49 == 22)> <Delay = 0.00>
+ST_13 : Operation 201 [1/1] (0.00ns)   --->   "%local_A_21_addr = getelementptr i32 %local_A_21, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 201 'getelementptr' 'local_A_21_addr' <Predicate = (trunc_ln49 == 21)> <Delay = 0.00>
+ST_13 : Operation 202 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_21_addr" [./src/matrix_mul.cpp:49]   --->   Operation 202 'store' 'store_ln49' <Predicate = (trunc_ln49 == 21)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 203 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 203 'br' 'br_ln49' <Predicate = (trunc_ln49 == 21)> <Delay = 0.00>
+ST_13 : Operation 204 [1/1] (0.00ns)   --->   "%local_A_20_addr = getelementptr i32 %local_A_20, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 204 'getelementptr' 'local_A_20_addr' <Predicate = (trunc_ln49 == 20)> <Delay = 0.00>
+ST_13 : Operation 205 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_20_addr" [./src/matrix_mul.cpp:49]   --->   Operation 205 'store' 'store_ln49' <Predicate = (trunc_ln49 == 20)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 206 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 206 'br' 'br_ln49' <Predicate = (trunc_ln49 == 20)> <Delay = 0.00>
+ST_13 : Operation 207 [1/1] (0.00ns)   --->   "%local_A_19_addr = getelementptr i32 %local_A_19, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 207 'getelementptr' 'local_A_19_addr' <Predicate = (trunc_ln49 == 19)> <Delay = 0.00>
+ST_13 : Operation 208 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_19_addr" [./src/matrix_mul.cpp:49]   --->   Operation 208 'store' 'store_ln49' <Predicate = (trunc_ln49 == 19)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 209 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 209 'br' 'br_ln49' <Predicate = (trunc_ln49 == 19)> <Delay = 0.00>
+ST_13 : Operation 210 [1/1] (0.00ns)   --->   "%local_A_18_addr = getelementptr i32 %local_A_18, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 210 'getelementptr' 'local_A_18_addr' <Predicate = (trunc_ln49 == 18)> <Delay = 0.00>
+ST_13 : Operation 211 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_18_addr" [./src/matrix_mul.cpp:49]   --->   Operation 211 'store' 'store_ln49' <Predicate = (trunc_ln49 == 18)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 212 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 212 'br' 'br_ln49' <Predicate = (trunc_ln49 == 18)> <Delay = 0.00>
+ST_13 : Operation 213 [1/1] (0.00ns)   --->   "%local_A_17_addr = getelementptr i32 %local_A_17, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 213 'getelementptr' 'local_A_17_addr' <Predicate = (trunc_ln49 == 17)> <Delay = 0.00>
+ST_13 : Operation 214 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_17_addr" [./src/matrix_mul.cpp:49]   --->   Operation 214 'store' 'store_ln49' <Predicate = (trunc_ln49 == 17)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 215 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 215 'br' 'br_ln49' <Predicate = (trunc_ln49 == 17)> <Delay = 0.00>
+ST_13 : Operation 216 [1/1] (0.00ns)   --->   "%local_A_16_addr = getelementptr i32 %local_A_16, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 216 'getelementptr' 'local_A_16_addr' <Predicate = (trunc_ln49 == 16)> <Delay = 0.00>
+ST_13 : Operation 217 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_16_addr" [./src/matrix_mul.cpp:49]   --->   Operation 217 'store' 'store_ln49' <Predicate = (trunc_ln49 == 16)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 218 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 218 'br' 'br_ln49' <Predicate = (trunc_ln49 == 16)> <Delay = 0.00>
+ST_13 : Operation 219 [1/1] (0.00ns)   --->   "%local_A_15_addr = getelementptr i32 %local_A_15, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 219 'getelementptr' 'local_A_15_addr' <Predicate = (trunc_ln49 == 15)> <Delay = 0.00>
+ST_13 : Operation 220 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_15_addr" [./src/matrix_mul.cpp:49]   --->   Operation 220 'store' 'store_ln49' <Predicate = (trunc_ln49 == 15)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 221 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 221 'br' 'br_ln49' <Predicate = (trunc_ln49 == 15)> <Delay = 0.00>
+ST_13 : Operation 222 [1/1] (0.00ns)   --->   "%local_A_14_addr = getelementptr i32 %local_A_14, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 222 'getelementptr' 'local_A_14_addr' <Predicate = (trunc_ln49 == 14)> <Delay = 0.00>
+ST_13 : Operation 223 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_14_addr" [./src/matrix_mul.cpp:49]   --->   Operation 223 'store' 'store_ln49' <Predicate = (trunc_ln49 == 14)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 224 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 224 'br' 'br_ln49' <Predicate = (trunc_ln49 == 14)> <Delay = 0.00>
+ST_13 : Operation 225 [1/1] (0.00ns)   --->   "%local_A_13_addr = getelementptr i32 %local_A_13, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 225 'getelementptr' 'local_A_13_addr' <Predicate = (trunc_ln49 == 13)> <Delay = 0.00>
+ST_13 : Operation 226 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_13_addr" [./src/matrix_mul.cpp:49]   --->   Operation 226 'store' 'store_ln49' <Predicate = (trunc_ln49 == 13)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 227 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 227 'br' 'br_ln49' <Predicate = (trunc_ln49 == 13)> <Delay = 0.00>
+ST_13 : Operation 228 [1/1] (0.00ns)   --->   "%local_A_12_addr = getelementptr i32 %local_A_12, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 228 'getelementptr' 'local_A_12_addr' <Predicate = (trunc_ln49 == 12)> <Delay = 0.00>
+ST_13 : Operation 229 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_12_addr" [./src/matrix_mul.cpp:49]   --->   Operation 229 'store' 'store_ln49' <Predicate = (trunc_ln49 == 12)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 230 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 230 'br' 'br_ln49' <Predicate = (trunc_ln49 == 12)> <Delay = 0.00>
+ST_13 : Operation 231 [1/1] (0.00ns)   --->   "%local_A_11_addr = getelementptr i32 %local_A_11, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 231 'getelementptr' 'local_A_11_addr' <Predicate = (trunc_ln49 == 11)> <Delay = 0.00>
+ST_13 : Operation 232 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_11_addr" [./src/matrix_mul.cpp:49]   --->   Operation 232 'store' 'store_ln49' <Predicate = (trunc_ln49 == 11)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 233 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 233 'br' 'br_ln49' <Predicate = (trunc_ln49 == 11)> <Delay = 0.00>
+ST_13 : Operation 234 [1/1] (0.00ns)   --->   "%local_A_10_addr = getelementptr i32 %local_A_10, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 234 'getelementptr' 'local_A_10_addr' <Predicate = (trunc_ln49 == 10)> <Delay = 0.00>
+ST_13 : Operation 235 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_10_addr" [./src/matrix_mul.cpp:49]   --->   Operation 235 'store' 'store_ln49' <Predicate = (trunc_ln49 == 10)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 236 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 236 'br' 'br_ln49' <Predicate = (trunc_ln49 == 10)> <Delay = 0.00>
+ST_13 : Operation 237 [1/1] (0.00ns)   --->   "%local_A_9_addr = getelementptr i32 %local_A_9, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 237 'getelementptr' 'local_A_9_addr' <Predicate = (trunc_ln49 == 9)> <Delay = 0.00>
+ST_13 : Operation 238 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_9_addr" [./src/matrix_mul.cpp:49]   --->   Operation 238 'store' 'store_ln49' <Predicate = (trunc_ln49 == 9)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 239 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 239 'br' 'br_ln49' <Predicate = (trunc_ln49 == 9)> <Delay = 0.00>
+ST_13 : Operation 240 [1/1] (0.00ns)   --->   "%local_A_8_addr = getelementptr i32 %local_A_8, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 240 'getelementptr' 'local_A_8_addr' <Predicate = (trunc_ln49 == 8)> <Delay = 0.00>
+ST_13 : Operation 241 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_8_addr" [./src/matrix_mul.cpp:49]   --->   Operation 241 'store' 'store_ln49' <Predicate = (trunc_ln49 == 8)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 242 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 242 'br' 'br_ln49' <Predicate = (trunc_ln49 == 8)> <Delay = 0.00>
+ST_13 : Operation 243 [1/1] (0.00ns)   --->   "%local_A_7_addr = getelementptr i32 %local_A_7, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 243 'getelementptr' 'local_A_7_addr' <Predicate = (trunc_ln49 == 7)> <Delay = 0.00>
+ST_13 : Operation 244 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_7_addr" [./src/matrix_mul.cpp:49]   --->   Operation 244 'store' 'store_ln49' <Predicate = (trunc_ln49 == 7)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 245 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 245 'br' 'br_ln49' <Predicate = (trunc_ln49 == 7)> <Delay = 0.00>
+ST_13 : Operation 246 [1/1] (0.00ns)   --->   "%local_A_6_addr = getelementptr i32 %local_A_6, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 246 'getelementptr' 'local_A_6_addr' <Predicate = (trunc_ln49 == 6)> <Delay = 0.00>
+ST_13 : Operation 247 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_6_addr" [./src/matrix_mul.cpp:49]   --->   Operation 247 'store' 'store_ln49' <Predicate = (trunc_ln49 == 6)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 248 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 248 'br' 'br_ln49' <Predicate = (trunc_ln49 == 6)> <Delay = 0.00>
+ST_13 : Operation 249 [1/1] (0.00ns)   --->   "%local_A_5_addr = getelementptr i32 %local_A_5, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 249 'getelementptr' 'local_A_5_addr' <Predicate = (trunc_ln49 == 5)> <Delay = 0.00>
+ST_13 : Operation 250 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_5_addr" [./src/matrix_mul.cpp:49]   --->   Operation 250 'store' 'store_ln49' <Predicate = (trunc_ln49 == 5)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 251 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 251 'br' 'br_ln49' <Predicate = (trunc_ln49 == 5)> <Delay = 0.00>
+ST_13 : Operation 252 [1/1] (0.00ns)   --->   "%local_A_4_addr = getelementptr i32 %local_A_4, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 252 'getelementptr' 'local_A_4_addr' <Predicate = (trunc_ln49 == 4)> <Delay = 0.00>
+ST_13 : Operation 253 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_4_addr" [./src/matrix_mul.cpp:49]   --->   Operation 253 'store' 'store_ln49' <Predicate = (trunc_ln49 == 4)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 254 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 254 'br' 'br_ln49' <Predicate = (trunc_ln49 == 4)> <Delay = 0.00>
+ST_13 : Operation 255 [1/1] (0.00ns)   --->   "%local_A_3_addr = getelementptr i32 %local_A_3, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 255 'getelementptr' 'local_A_3_addr' <Predicate = (trunc_ln49 == 3)> <Delay = 0.00>
+ST_13 : Operation 256 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_3_addr" [./src/matrix_mul.cpp:49]   --->   Operation 256 'store' 'store_ln49' <Predicate = (trunc_ln49 == 3)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 257 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 257 'br' 'br_ln49' <Predicate = (trunc_ln49 == 3)> <Delay = 0.00>
+ST_13 : Operation 258 [1/1] (0.00ns)   --->   "%local_A_2_addr = getelementptr i32 %local_A_2, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 258 'getelementptr' 'local_A_2_addr' <Predicate = (trunc_ln49 == 2)> <Delay = 0.00>
+ST_13 : Operation 259 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_2_addr" [./src/matrix_mul.cpp:49]   --->   Operation 259 'store' 'store_ln49' <Predicate = (trunc_ln49 == 2)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 260 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 260 'br' 'br_ln49' <Predicate = (trunc_ln49 == 2)> <Delay = 0.00>
+ST_13 : Operation 261 [1/1] (0.00ns)   --->   "%local_A_1_addr = getelementptr i32 %local_A_1, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 261 'getelementptr' 'local_A_1_addr' <Predicate = (trunc_ln49 == 1)> <Delay = 0.00>
+ST_13 : Operation 262 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_1_addr" [./src/matrix_mul.cpp:49]   --->   Operation 262 'store' 'store_ln49' <Predicate = (trunc_ln49 == 1)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 263 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 263 'br' 'br_ln49' <Predicate = (trunc_ln49 == 1)> <Delay = 0.00>
+ST_13 : Operation 264 [1/1] (0.00ns)   --->   "%local_A_addr = getelementptr i32 %local_A, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 264 'getelementptr' 'local_A_addr' <Predicate = (trunc_ln49 == 0)> <Delay = 0.00>
+ST_13 : Operation 265 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_addr" [./src/matrix_mul.cpp:49]   --->   Operation 265 'store' 'store_ln49' <Predicate = (trunc_ln49 == 0)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 266 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 266 'br' 'br_ln49' <Predicate = (trunc_ln49 == 0)> <Delay = 0.00>
+ST_13 : Operation 267 [1/1] (0.00ns)   --->   "%local_A_63_addr = getelementptr i32 %local_A_63, i64 0, i64 %zext_ln46" [./src/matrix_mul.cpp:46]   --->   Operation 267 'getelementptr' 'local_A_63_addr' <Predicate = (trunc_ln49 == 63)> <Delay = 0.00>
+ST_13 : Operation 268 [1/1] (0.69ns)   --->   "%store_ln49 = store i32 %bitcast_ln49, i6 %local_A_63_addr" [./src/matrix_mul.cpp:49]   --->   Operation 268 'store' 'store_ln49' <Predicate = (trunc_ln49 == 63)> <Delay = 0.69> <CoreInst = "RAM">   --->   Core 83 'RAM' <Latency = 1> <II = 1> <Delay = 0.69> <Storage> <Opcode : 'load' 'store'> <Ports = 2> <Width = 32> <Depth = 64> <RAM>
+ST_13 : Operation 269 [1/1] (0.00ns)   --->   "%br_ln49 = br void %arrayidx387.exit" [./src/matrix_mul.cpp:49]   --->   Operation 269 'br' 'br_ln49' <Predicate = (trunc_ln49 == 63)> <Delay = 0.00>
+
+
+============================================================
++ Verbose Summary: Timing violations
+============================================================
+Target clock period: 3.33ns, clock uncertainty: 0.899ns.
+
+ <State 1>: 2ns
+The critical path consists of the following:
+	'alloca' operation ('kk') [70]  (0 ns)
+	'load' operation ('kk_load', ./src/matrix_mul.cpp:47) on local variable 'kk' [92]  (0 ns)
+	'icmp' operation ('icmp_ln47', ./src/matrix_mul.cpp:47) [96]  (0.6 ns)
+	'select' operation ('select_ln46', ./src/matrix_mul.cpp:46) [98]  (0.308 ns)
+	'add' operation ('add_ln47', ./src/matrix_mul.cpp:47) [381]  (0.706 ns)
+	'store' operation ('store_ln47', ./src/matrix_mul.cpp:47) of variable 'add_ln47', ./src/matrix_mul.cpp:47 on local variable 'kk' [384]  (0.387 ns)
+
+ <State 2>: 2.29ns
+The critical path consists of the following:
+	'mul' operation ('mul_ln46', ./src/matrix_mul.cpp:46) [105]  (2.29 ns)
+
+ <State 3>: 2.29ns
+The critical path consists of the following:
+	'mul' operation ('mul_ln46', ./src/matrix_mul.cpp:46) [105]  (2.29 ns)
+
+ <State 4>: 2.27ns
+The critical path consists of the following:
+	'add' operation ('add_ln46_2', ./src/matrix_mul.cpp:46) [106]  (1.12 ns)
+	'add' operation ('add_ln46_3', ./src/matrix_mul.cpp:46) [108]  (1.15 ns)
+
+ <State 5>: 2.43ns
+The critical path consists of the following:
+	'getelementptr' operation ('gmem0_addr', ./src/matrix_mul.cpp:47) [113]  (0 ns)
+	bus request operation ('empty', ./src/matrix_mul.cpp:47) on port 'gmem0' (./src/matrix_mul.cpp:47) [114]  (2.43 ns)
+
+ <State 6>: 2.43ns
+The critical path consists of the following:
+	bus request operation ('empty', ./src/matrix_mul.cpp:47) on port 'gmem0' (./src/matrix_mul.cpp:47) [114]  (2.43 ns)
+
+ <State 7>: 2.43ns
+The critical path consists of the following:
+	bus request operation ('empty', ./src/matrix_mul.cpp:47) on port 'gmem0' (./src/matrix_mul.cpp:47) [114]  (2.43 ns)
+
+ <State 8>: 2.43ns
+The critical path consists of the following:
+	bus request operation ('empty', ./src/matrix_mul.cpp:47) on port 'gmem0' (./src/matrix_mul.cpp:47) [114]  (2.43 ns)
+
+ <State 9>: 2.43ns
+The critical path consists of the following:
+	bus request operation ('empty', ./src/matrix_mul.cpp:47) on port 'gmem0' (./src/matrix_mul.cpp:47) [114]  (2.43 ns)
+
+ <State 10>: 2.43ns
+The critical path consists of the following:
+	bus request operation ('empty', ./src/matrix_mul.cpp:47) on port 'gmem0' (./src/matrix_mul.cpp:47) [114]  (2.43 ns)
+
+ <State 11>: 2.43ns
+The critical path consists of the following:
+	bus request operation ('empty', ./src/matrix_mul.cpp:47) on port 'gmem0' (./src/matrix_mul.cpp:47) [114]  (2.43 ns)
+
+ <State 12>: 2.43ns
+The critical path consists of the following:
+	bus read operation ('gmem0_addr_1_read', ./src/matrix_mul.cpp:49) on port 'gmem0' (./src/matrix_mul.cpp:49) [120]  (2.43 ns)
+
+ <State 13>: 0.699ns
+The critical path consists of the following:
+	'getelementptr' operation ('local_A_40_addr', ./src/matrix_mul.cpp:46) [213]  (0 ns)
+	'store' operation ('store_ln49', ./src/matrix_mul.cpp:49) of variable 'bitcast_ln49', ./src/matrix_mul.cpp:49 on array 'local_A_40' [214]  (0.699 ns)
+
+
+============================================================
++ Verbose Summary: Binding
+============================================================
+N/A
+* FSMD analyzer results:
+  - Output states:
+ - Input state : 
+  - Chain level:
+	State 1
+	State 2
+	State 3
+	State 4
+	State 5
+	State 6
+	State 7
+	State 8
+	State 9
+	State 10
+	State 11
+	State 12
+	State 13
+
+
+============================================================
++ Verbose Summary: Datapath Resource usage 
+============================================================
+N/A

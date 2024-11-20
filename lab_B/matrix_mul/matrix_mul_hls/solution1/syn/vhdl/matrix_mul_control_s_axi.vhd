@@ -38,7 +38,7 @@ port (
     C                     :out  STD_LOGIC_VECTOR(63 downto 0);
     M                     :out  STD_LOGIC_VECTOR(31 downto 0);
     N                     :out  STD_LOGIC_VECTOR(31 downto 0);
-    K                     :out  STD_LOGIC_VECTOR(31 downto 0);
+    P                     :out  STD_LOGIC_VECTOR(31 downto 0);
     ap_start              :out  STD_LOGIC;
     ap_done               :in   STD_LOGIC;
     ap_ready              :in   STD_LOGIC;
@@ -87,8 +87,8 @@ end entity matrix_mul_control_s_axi;
 -- 0x3c : Data signal of N
 --        bit 31~0 - N[31:0] (Read/Write)
 -- 0x40 : reserved
--- 0x44 : Data signal of K
---        bit 31~0 - K[31:0] (Read/Write)
+-- 0x44 : Data signal of P
+--        bit 31~0 - P[31:0] (Read/Write)
 -- 0x48 : reserved
 -- (SC = Self Clear, COR = Clear on Read, TOW = Toggle on Write, COH = Clear on Handshake)
 
@@ -114,8 +114,8 @@ architecture behave of matrix_mul_control_s_axi is
     constant ADDR_M_CTRL   : INTEGER := 16#38#;
     constant ADDR_N_DATA_0 : INTEGER := 16#3c#;
     constant ADDR_N_CTRL   : INTEGER := 16#40#;
-    constant ADDR_K_DATA_0 : INTEGER := 16#44#;
-    constant ADDR_K_CTRL   : INTEGER := 16#48#;
+    constant ADDR_P_DATA_0 : INTEGER := 16#44#;
+    constant ADDR_P_CTRL   : INTEGER := 16#48#;
     constant ADDR_BITS         : INTEGER := 7;
 
     signal waddr               : UNSIGNED(ADDR_BITS-1 downto 0);
@@ -149,7 +149,7 @@ architecture behave of matrix_mul_control_s_axi is
     signal int_C               : UNSIGNED(63 downto 0) := (others => '0');
     signal int_M               : UNSIGNED(31 downto 0) := (others => '0');
     signal int_N               : UNSIGNED(31 downto 0) := (others => '0');
-    signal int_K               : UNSIGNED(31 downto 0) := (others => '0');
+    signal int_P               : UNSIGNED(31 downto 0) := (others => '0');
 
 
 begin
@@ -294,8 +294,8 @@ begin
                         rdata_data <= RESIZE(int_M(31 downto 0), 32);
                     when ADDR_N_DATA_0 =>
                         rdata_data <= RESIZE(int_N(31 downto 0), 32);
-                    when ADDR_K_DATA_0 =>
-                        rdata_data <= RESIZE(int_K(31 downto 0), 32);
+                    when ADDR_P_DATA_0 =>
+                        rdata_data <= RESIZE(int_P(31 downto 0), 32);
                     when others =>
                         NULL;
                     end case;
@@ -315,7 +315,7 @@ begin
     C                    <= STD_LOGIC_VECTOR(int_C);
     M                    <= STD_LOGIC_VECTOR(int_M);
     N                    <= STD_LOGIC_VECTOR(int_N);
-    K                    <= STD_LOGIC_VECTOR(int_K);
+    P                    <= STD_LOGIC_VECTOR(int_P);
 
     process (ACLK)
     begin
@@ -579,8 +579,8 @@ begin
     begin
         if (ACLK'event and ACLK = '1') then
             if (ACLK_EN = '1') then
-                if (w_hs = '1' and waddr = ADDR_K_DATA_0) then
-                    int_K(31 downto 0) <= (UNSIGNED(WDATA(31 downto 0)) and wmask(31 downto 0)) or ((not wmask(31 downto 0)) and int_K(31 downto 0));
+                if (w_hs = '1' and waddr = ADDR_P_DATA_0) then
+                    int_P(31 downto 0) <= (UNSIGNED(WDATA(31 downto 0)) and wmask(31 downto 0)) or ((not wmask(31 downto 0)) and int_P(31 downto 0));
                 end if;
             end if;
         end if;

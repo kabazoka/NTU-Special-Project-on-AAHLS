@@ -9,6 +9,4 @@ set_part xcu50-fsvh2104-2-e
 create_clock -period 3.33 -name default
 csim_design
 csynth_design
-cosim_design
 export_design -format ip_catalog
-

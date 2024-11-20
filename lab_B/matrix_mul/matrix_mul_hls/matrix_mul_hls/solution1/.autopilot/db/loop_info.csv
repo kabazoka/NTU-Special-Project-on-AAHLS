@@ -1,9 +1,0 @@
-,readA,seq_loop_status1.csv
-,readB,seq_loop_status2.csv
-,mmult_k,seq_loop_status3.csv
-,mmult_mmult_j,seq_loop_status4.csv
-,writeC,seq_loop_status5.csv
-grp_matrix_mul_Pipeline_readA_inner_fu_8464,readA_inner,upc_loop_status1.csv
-grp_matrix_mul_Pipeline_readB_inner_fu_8729,readB_inner,upc_loop_status2.csv
-grp_matrix_mul_Pipeline_initC_initC_inner_fu_8994,initC_initC_inner,upc_loop_status3.csv
-grp_matrix_mul_Pipeline_writeC_inner_fu_9001,writeC_inner,upc_loop_status4.csv

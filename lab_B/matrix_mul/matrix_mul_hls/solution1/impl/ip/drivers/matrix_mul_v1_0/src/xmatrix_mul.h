@@ -98,8 +98,8 @@ void XMatrix_mul_Set_M(XMatrix_mul *InstancePtr, u32 Data);
 u32 XMatrix_mul_Get_M(XMatrix_mul *InstancePtr);
 void XMatrix_mul_Set_N(XMatrix_mul *InstancePtr, u32 Data);
 u32 XMatrix_mul_Get_N(XMatrix_mul *InstancePtr);
-void XMatrix_mul_Set_K(XMatrix_mul *InstancePtr, u32 Data);
-u32 XMatrix_mul_Get_K(XMatrix_mul *InstancePtr);
+void XMatrix_mul_Set_P(XMatrix_mul *InstancePtr, u32 Data);
+u32 XMatrix_mul_Get_P(XMatrix_mul *InstancePtr);
 
 void XMatrix_mul_InterruptGlobalEnable(XMatrix_mul *InstancePtr);
 void XMatrix_mul_InterruptGlobalDisable(XMatrix_mul *InstancePtr);

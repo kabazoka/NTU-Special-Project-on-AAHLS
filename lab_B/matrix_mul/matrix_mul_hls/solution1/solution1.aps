@@ -19,13 +19,6 @@
     <clockList>
         <clock name="default" period="3.33" default="false"/>
     </clockList>
-    <Simulation argv="">
-        <SimFlow name="cosim" setup="false" dumpTrace="none" optimizeCompile="false" ldflags="" mflags="" compiledLibrary="" toolName="auto">
-            <Rtl name="systemc" active="false"/>
-            <Rtl name="verilog" active="true"/>
-            <Rtl name="vhdl" active="false"/>
-        </SimFlow>
-    </Simulation>
     <ExportDesign askAgain="true" evaluate="false" rtl="verilog" formatName="ip_catalog">
         <Format formatName="ip_catalog" description="" vendor="" library="" ipname="matrix_mul" version="" display_name="" taxonomy=""/>
     </ExportDesign>

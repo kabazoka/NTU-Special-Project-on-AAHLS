@@ -1,7 +1,5 @@
 obj/matrix_mul.o: ../../../../src/matrix_mul.cpp \
- /tools/Xilinx/Vitis_HLS/2022.1/include/hls_stream.h \
- /tools/Xilinx/Vitis_HLS/2022.1/include/hls_stream_thread_unsafe.h \
- /tools/Xilinx/Vitis_HLS/2022.1/include/ap_axi_sdata.h \
+ ../../../../src/matrix_mul.h \
  /tools/Xilinx/Vitis_HLS/2022.1/include/ap_int.h \
  /tools/Xilinx/Vitis_HLS/2022.1/include/ap_common.h \
  /tools/Xilinx/Vitis_HLS/2022.1/include/ap_decl.h \
@@ -21,6 +19,5 @@ obj/matrix_mul.o: ../../../../src/matrix_mul.cpp \
  /tools/Xilinx/Vitis_HLS/2022.1/include/ap_int_special.h \
  /tools/Xilinx/Vitis_HLS/2022.1/include/ap_fixed.h \
  /tools/Xilinx/Vitis_HLS/2022.1/include/ap_fixed_base.h \
- /tools/Xilinx/Vitis_HLS/2022.1/include/ap_int.h \
  /tools/Xilinx/Vitis_HLS/2022.1/include/ap_fixed_ref.h \
  /tools/Xilinx/Vitis_HLS/2022.1/include/ap_fixed_special.h

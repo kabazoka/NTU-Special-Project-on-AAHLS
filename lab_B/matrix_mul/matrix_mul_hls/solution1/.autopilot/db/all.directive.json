@@ -5,7 +5,7 @@
           "label": "",
           "functionLabel": "",
           "id": "1",
-          "sourceFile": "\/home\/ubuntu\/matrix_mul_hls\/run_hls.tcl",
+          "sourceFile": "\/home\/ubuntu\/Documents\/GitHub\/NTU-Special-Project-on-AAHLS\/lab_B\/matrix_mul\/run_hls.tcl",
           "sourceLine": "11",
           "pragma": {
             "name": "TOP",

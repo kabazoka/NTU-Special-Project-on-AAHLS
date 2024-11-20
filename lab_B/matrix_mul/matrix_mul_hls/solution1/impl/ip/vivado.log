@@ -2,25 +2,25 @@
 # Vivado v2022.1 (64-bit)
 # SW Build 3526262 on Mon Apr 18 15:47:01 MDT 2022
 # IP Build 3524634 on Mon Apr 18 20:55:01 MDT 2022
-# Start of session at: Wed Nov 13 09:25:34 2024
-# Process ID: 14598
-# Current directory: /home/ubuntu/matrix_mul_hls/matrix_mul_hls/solution1/impl/ip
+# Start of session at: Wed Nov 20 15:30:36 2024
+# Process ID: 9721
+# Current directory: /home/ubuntu/Documents/GitHub/NTU-Special-Project-on-AAHLS/lab_B/matrix_mul/matrix_mul_hls/solution1/impl/ip
 # Command line: vivado -notrace -mode batch -source run_ippack.tcl
-# Log file: /home/ubuntu/matrix_mul_hls/matrix_mul_hls/solution1/impl/ip/vivado.log
-# Journal file: /home/ubuntu/matrix_mul_hls/matrix_mul_hls/solution1/impl/ip/vivado.jou
-# Running On: ubuntu2004, OS: Linux, CPU Frequency: 2495.996 MHz, CPU Physical cores: 8, Host memory: 10423 MB
+# Log file: /home/ubuntu/Documents/GitHub/NTU-Special-Project-on-AAHLS/lab_B/matrix_mul/matrix_mul_hls/solution1/impl/ip/vivado.log
+# Journal file: /home/ubuntu/Documents/GitHub/NTU-Special-Project-on-AAHLS/lab_B/matrix_mul/matrix_mul_hls/solution1/impl/ip/vivado.jou
+# Running On: ubuntu2004, OS: Linux, CPU Frequency: 2495.998 MHz, CPU Physical cores: 8, Host memory: 10423 MB
 #-----------------------------------------------------------
 source run_ippack.tcl -notrace
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1704] No user IP repositories specified
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/tools/Xilinx/Vivado/2022.1/data/ip'.
-WARNING: [IP_Flow 19-4832] The IP name 'matrix_mul_fadd_32ns_32ns_32_7_full_dsp_1_ip' you have specified is long. The Windows operating system has path length limitations. It is recommended you use shorter names to reduce the likelihood of issues.
-INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'matrix_mul_fadd_32ns_32ns_32_7_full_dsp_1_ip'...
-INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'matrix_mul_fadd_32ns_32ns_32_7_full_dsp_1_ip'...
+WARNING: [IP_Flow 19-4832] The IP name 'matrix_mul_fadd_32ns_32ns_32_5_no_dsp_1_ip' you have specified is long. The Windows operating system has path length limitations. It is recommended you use shorter names to reduce the likelihood of issues.
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'matrix_mul_fadd_32ns_32ns_32_5_no_dsp_1_ip'...
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'matrix_mul_fadd_32ns_32ns_32_5_no_dsp_1_ip'...
 WARNING: [IP_Flow 19-4832] The IP name 'matrix_mul_fmul_32ns_32ns_32_4_max_dsp_1_ip' you have specified is long. The Windows operating system has path length limitations. It is recommended you use shorter names to reduce the likelihood of issues.
 INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'matrix_mul_fmul_32ns_32ns_32_4_max_dsp_1_ip'...
 INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'matrix_mul_fmul_32ns_32ns_32_4_max_dsp_1_ip'...
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1704] No user IP repositories specified
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/tools/Xilinx/Vivado/2022.1/data/ip'.
-INFO: [Common 17-206] Exiting Vivado at Wed Nov 13 09:25:45 2024...
+INFO: [Common 17-206] Exiting Vivado at Wed Nov 20 15:30:52 2024...

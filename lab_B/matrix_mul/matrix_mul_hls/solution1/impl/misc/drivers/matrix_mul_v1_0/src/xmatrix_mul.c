@@ -165,20 +165,20 @@ u32 XMatrix_mul_Get_N(XMatrix_mul *InstancePtr) {
     return Data;
 }
 
-void XMatrix_mul_Set_K(XMatrix_mul *InstancePtr, u32 Data) {
+void XMatrix_mul_Set_P(XMatrix_mul *InstancePtr, u32 Data) {
     Xil_AssertVoid(InstancePtr != NULL);
     Xil_AssertVoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
 
-    XMatrix_mul_WriteReg(InstancePtr->Control_BaseAddress, XMATRIX_MUL_CONTROL_ADDR_K_DATA, Data);
+    XMatrix_mul_WriteReg(InstancePtr->Control_BaseAddress, XMATRIX_MUL_CONTROL_ADDR_P_DATA, Data);
 }
 
-u32 XMatrix_mul_Get_K(XMatrix_mul *InstancePtr) {
+u32 XMatrix_mul_Get_P(XMatrix_mul *InstancePtr) {
     u32 Data;
 
     Xil_AssertNonvoid(InstancePtr != NULL);
     Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
 
-    Data = XMatrix_mul_ReadReg(InstancePtr->Control_BaseAddress, XMATRIX_MUL_CONTROL_ADDR_K_DATA);
+    Data = XMatrix_mul_ReadReg(InstancePtr->Control_BaseAddress, XMATRIX_MUL_CONTROL_ADDR_P_DATA);
     return Data;
 }
 

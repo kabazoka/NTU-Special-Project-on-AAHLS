@@ -181,10 +181,10 @@ class AESL_RUNTIME_BC {
     string mName;
 };
 extern "C" void matrix_mul(int*, int*, int*, int, int, int, int, int, int);
-extern "C" void apatb_matrix_mul_hw(volatile void * __xlx_apatb_param_A, volatile void * __xlx_apatb_param_B, volatile void * __xlx_apatb_param_C, int __xlx_apatb_param_M, int __xlx_apatb_param_N, int __xlx_apatb_param_K) {
+extern "C" void apatb_matrix_mul_hw(volatile void * __xlx_apatb_param_A, volatile void * __xlx_apatb_param_B, volatile void * __xlx_apatb_param_C, int __xlx_apatb_param_M, int __xlx_apatb_param_N, int __xlx_apatb_param_P) {
   // Collect __xlx_A__tmp_vec
   vector<sc_bv<32> >__xlx_A__tmp_vec;
-  for (int j = 0, e = 4096; j != e; ++j) {
+  for (int j = 0, e = 1; j != e; ++j) {
     sc_bv<32> _xlx_tmp_sc;
     _xlx_tmp_sc.range(7, 0) = ((char*)__xlx_apatb_param_A)[j*4+0];
     _xlx_tmp_sc.range(15, 8) = ((char*)__xlx_apatb_param_A)[j*4+1];
@@ -192,7 +192,7 @@ extern "C" void apatb_matrix_mul_hw(volatile void * __xlx_apatb_param_A, volatil
     _xlx_tmp_sc.range(31, 24) = ((char*)__xlx_apatb_param_A)[j*4+3];
     __xlx_A__tmp_vec.push_back(_xlx_tmp_sc);
   }
-  int __xlx_size_param_A = 4096;
+  int __xlx_size_param_A = 1;
   int __xlx_offset_param_A = 0;
   int __xlx_offset_byte_param_A = 0*4;
   int* __xlx_A__input_buffer= new int[__xlx_A__tmp_vec.size()];
@@ -201,7 +201,7 @@ extern "C" void apatb_matrix_mul_hw(volatile void * __xlx_apatb_param_A, volatil
   }
   // Collect __xlx_B__tmp_vec
   vector<sc_bv<32> >__xlx_B__tmp_vec;
-  for (int j = 0, e = 4096; j != e; ++j) {
+  for (int j = 0, e = 1; j != e; ++j) {
     sc_bv<32> _xlx_tmp_sc;
     _xlx_tmp_sc.range(7, 0) = ((char*)__xlx_apatb_param_B)[j*4+0];
     _xlx_tmp_sc.range(15, 8) = ((char*)__xlx_apatb_param_B)[j*4+1];
@@ -209,7 +209,7 @@ extern "C" void apatb_matrix_mul_hw(volatile void * __xlx_apatb_param_A, volatil
     _xlx_tmp_sc.range(31, 24) = ((char*)__xlx_apatb_param_B)[j*4+3];
     __xlx_B__tmp_vec.push_back(_xlx_tmp_sc);
   }
-  int __xlx_size_param_B = 4096;
+  int __xlx_size_param_B = 1;
   int __xlx_offset_param_B = 0;
   int __xlx_offset_byte_param_B = 0*4;
   int* __xlx_B__input_buffer= new int[__xlx_B__tmp_vec.size()];
@@ -218,7 +218,7 @@ extern "C" void apatb_matrix_mul_hw(volatile void * __xlx_apatb_param_A, volatil
   }
   // Collect __xlx_C__tmp_vec
   vector<sc_bv<32> >__xlx_C__tmp_vec;
-  for (int j = 0, e = 4096; j != e; ++j) {
+  for (int j = 0, e = 1; j != e; ++j) {
     sc_bv<32> _xlx_tmp_sc;
     _xlx_tmp_sc.range(7, 0) = ((char*)__xlx_apatb_param_C)[j*4+0];
     _xlx_tmp_sc.range(15, 8) = ((char*)__xlx_apatb_param_C)[j*4+1];
@@ -226,7 +226,7 @@ extern "C" void apatb_matrix_mul_hw(volatile void * __xlx_apatb_param_A, volatil
     _xlx_tmp_sc.range(31, 24) = ((char*)__xlx_apatb_param_C)[j*4+3];
     __xlx_C__tmp_vec.push_back(_xlx_tmp_sc);
   }
-  int __xlx_size_param_C = 4096;
+  int __xlx_size_param_C = 1;
   int __xlx_offset_param_C = 0;
   int __xlx_offset_byte_param_C = 0*4;
   int* __xlx_C__input_buffer= new int[__xlx_C__tmp_vec.size()];
@@ -234,7 +234,7 @@ extern "C" void apatb_matrix_mul_hw(volatile void * __xlx_apatb_param_A, volatil
     __xlx_C__input_buffer[i] = __xlx_C__tmp_vec[i].range(31, 0).to_uint64();
   }
   // DUT call
-  matrix_mul(__xlx_A__input_buffer, __xlx_B__input_buffer, __xlx_C__input_buffer, __xlx_offset_byte_param_A, __xlx_offset_byte_param_B, __xlx_offset_byte_param_C, __xlx_apatb_param_M, __xlx_apatb_param_N, __xlx_apatb_param_K);
+  matrix_mul(__xlx_A__input_buffer, __xlx_B__input_buffer, __xlx_C__input_buffer, __xlx_offset_byte_param_A, __xlx_offset_byte_param_B, __xlx_offset_byte_param_C, __xlx_apatb_param_M, __xlx_apatb_param_N, __xlx_apatb_param_P);
 // print __xlx_apatb_param_A
   sc_bv<32>*__xlx_A_output_buffer = new sc_bv<32>[__xlx_size_param_A];
   for (int i = 0; i < __xlx_size_param_A; ++i) {

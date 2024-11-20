@@ -3,10 +3,10 @@
 <!--                                                         -->
 <!-- Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.   -->
 
-<Project Version="7" Minor="60" Path="/home/ubuntu/matrix_mul_hls/matrix_mul_hls/solution1/impl/ip/tmp.xpr">
+<Project Version="7" Minor="60" Path="/home/ubuntu/Documents/GitHub/NTU-Special-Project-on-AAHLS/lab_B/matrix_mul/matrix_mul_hls/solution1/impl/ip/tmp.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
-    <Option Name="Id" Val="d59c33dcd3f04152b2252baa5f1dfb2e"/>
+    <Option Name="Id" Val="f090ad986f3c4c7fbb308d8e46bc67a6"/>
     <Option Name="Part" Val="xcu50-fsvh2104-2-e"/>
     <Option Name="CompiledLibDir" Val="$PCACHEDIR/compile_simlib"/>
     <Option Name="CompiledLibDirXSim" Val=""/>
@@ -87,7 +87,7 @@
   <FileSets Version="1" Minor="31">
     <FileSet Name="sources_1" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
       <Filter Type="Srcs"/>
-      <File Path="$PSRCDIR/sources_1/ip/matrix_mul_fadd_32ns_32ns_32_7_full_dsp_1_ip/matrix_mul_fadd_32ns_32ns_32_7_full_dsp_1_ip.xci">
+      <File Path="$PSRCDIR/sources_1/ip/matrix_mul_fadd_32ns_32ns_32_5_no_dsp_1_ip/matrix_mul_fadd_32ns_32ns_32_5_no_dsp_1_ip.xci">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>

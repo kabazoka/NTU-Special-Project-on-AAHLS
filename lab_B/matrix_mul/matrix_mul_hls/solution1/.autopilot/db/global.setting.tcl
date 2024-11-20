@@ -44,7 +44,7 @@ set SCTraceOption all
 set TargetInfo xcu50:-fsvh2104:-2-e
 set SourceFiles {sc {} c {../.././src/matrix_mul.cpp ../../src/matrix_mul.cpp}}
 set SourceFlags {sc {} c {{ } {} {}}}
-set DirectiveFile /home/ubuntu/matrix_mul_hls/matrix_mul_hls/solution1/solution1.directive
+set DirectiveFile /home/ubuntu/Documents/GitHub/NTU-Special-Project-on-AAHLS/lab_B/matrix_mul/matrix_mul_hls/solution1/solution1.directive
 set TBFiles {verilog ../../src/testbench.cpp bc ../../src/testbench.cpp sc ../../src/testbench.cpp vhdl ../../src/testbench.cpp c {} cas ../../src/testbench.cpp}
 set SpecLanguage C
 set TVInFiles {bc {} c {} sc {} cas {} vhdl {} verilog {}}

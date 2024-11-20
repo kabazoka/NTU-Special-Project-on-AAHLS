@@ -38,8 +38,8 @@
 // 0x3c : Data signal of N
 //        bit 31~0 - N[31:0] (Read/Write)
 // 0x40 : reserved
-// 0x44 : Data signal of K
-//        bit 31~0 - K[31:0] (Read/Write)
+// 0x44 : Data signal of P
+//        bit 31~0 - P[31:0] (Read/Write)
 // 0x48 : reserved
 // (SC = Self Clear, COR = Clear on Read, TOW = Toggle on Write, COH = Clear on Handshake)
 
@@ -57,5 +57,5 @@
 #define CONTROL_BITS_M_DATA  32
 #define CONTROL_ADDR_N_DATA  0x3c
 #define CONTROL_BITS_N_DATA  32
-#define CONTROL_ADDR_K_DATA  0x44
-#define CONTROL_BITS_K_DATA  32
+#define CONTROL_ADDR_P_DATA  0x44
+#define CONTROL_BITS_P_DATA  32

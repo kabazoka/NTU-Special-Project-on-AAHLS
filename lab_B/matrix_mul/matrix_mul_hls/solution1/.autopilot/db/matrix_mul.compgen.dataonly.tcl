@@ -42,7 +42,7 @@ N {
 	offset 60
 	offset_end 67
 }
-K { 
+P { 
 	dir I
 	width 32
 	depth 1

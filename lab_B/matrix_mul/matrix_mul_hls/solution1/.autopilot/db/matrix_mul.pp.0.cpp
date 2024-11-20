@@ -159,225 +159,12 @@ extern "C" {
 # 1 "./src/matrix_mul.cpp" 2
 
 
-# 1 "/tools/Xilinx/Vitis_HLS/2022.1/common/technology/autopilot/hls_stream.h" 1
-# 61 "/tools/Xilinx/Vitis_HLS/2022.1/common/technology/autopilot/hls_stream.h"
-# 1 "/tools/Xilinx/Vitis_HLS/2022.1/common/technology/autopilot/hls_stream_39.h" 1
-# 72 "/tools/Xilinx/Vitis_HLS/2022.1/common/technology/autopilot/hls_stream_39.h"
-namespace hls {
-# 94 "/tools/Xilinx/Vitis_HLS/2022.1/common/technology/autopilot/hls_stream_39.h"
-template<typename __STREAM_T__, int DEPTH=0>
-class stream;
-
-template<typename __STREAM_T__>
-class stream<__STREAM_T__, 0>
-{
-  public:
-    using value_type = __STREAM_T__;
-
-    inline __attribute__((always_inline)) stream() {
-      __fpga_set_stream_depth(&this->V, 0);
-    }
-
-    inline __attribute__((always_inline)) stream(const char* name) {
-      (void)(name);
-      __fpga_set_stream_depth(&this->V, 0);
-    }
-
-
-  private:
-    inline __attribute__((always_inline)) stream(const stream< __STREAM_T__ >& chn):V(chn.V) {
-    }
-
-    inline __attribute__((always_inline)) stream& operator= (const stream< __STREAM_T__ >& chn) {
-        V = chn.V;
-        return *this;
-    }
-
-  public:
-
-    inline __attribute__((always_inline)) void operator >> (__STREAM_T__& rdata) {
-        read(rdata);
-    }
-
-    inline __attribute__((always_inline)) void operator << (const __STREAM_T__& wdata) {
-        write(wdata);
-    }
-
-
-  public:
-
-    inline __attribute__((always_inline)) bool empty() const {
-        return !__fpga_fifo_not_empty(&V);
-    }
-
-    inline __attribute__((always_inline)) bool full() const {
-        return !__fpga_fifo_not_full(&V);
-    }
-
-
-    inline __attribute__((always_inline)) void read(__STREAM_T__& dout) {
-        __fpga_fifo_pop(&V, &dout);
-    }
-
-
-    inline __attribute__((noinline)) bool read_dep(__STREAM_T__& dout, volatile bool flag) {
-        __fpga_fifo_pop(&V, &dout);
-        return flag;
-    }
-
-    inline __attribute__((always_inline)) __STREAM_T__ read() {
-        __STREAM_T__ tmp;
-        read(tmp);
-        return tmp;
-    }
-
-
-    inline __attribute__((always_inline)) bool read_nb(__STREAM_T__& dout) {
-        __STREAM_T__ tmp;
-
-        if (__fpga_fifo_nb_pop(&V, &tmp)) {
-            dout = tmp;
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
-    inline __attribute__((always_inline)) void write(const __STREAM_T__& din) {
-        __fpga_fifo_push(&V, &din);
-    }
-
-
-    inline __attribute__((noinline)) bool write_dep(const __STREAM_T__& din, volatile bool flag) {
-        __fpga_fifo_push(&V, &din);
-        return flag;
-    }
-
-
-    inline __attribute__((always_inline)) bool write_nb(const __STREAM_T__& din) {
-        return __fpga_fifo_nb_push(&V, &din);
-    }
-
-
-    inline __attribute__((always_inline)) unsigned size() const {
-        return __fpga_fifo_size(&V);
-    }
-
-
-    inline __attribute__((always_inline)) unsigned capacity() const {
-        return __fpga_fifo_capacity(&V);
-    }
-
-
-    void set_name(const char* name) { (void)(name); }
-
-  public:
-    __STREAM_T__ V __attribute__((no_ctor));
-};
-
-template<typename __STREAM_T__, int DEPTH>
-class stream : public stream<__STREAM_T__, 0> {
-  public:
-    inline __attribute__((always_inline)) stream() {
-      __fpga_set_stream_depth(&this->V, DEPTH);
-    }
-
-    inline __attribute__((always_inline)) stream(const char* name) {
-      (void)(name);
-      __fpga_set_stream_depth(&this->V, DEPTH);
-    }
-};
-}
-# 62 "/tools/Xilinx/Vitis_HLS/2022.1/common/technology/autopilot/hls_stream.h" 2
-# 4 "./src/matrix_mul.cpp" 2
-# 1 "/tools/Xilinx/Vitis_HLS/2022.1/common/technology/autopilot/ap_axi_sdata.h" 1
-# 87 "/tools/Xilinx/Vitis_HLS/2022.1/common/technology/autopilot/ap_axi_sdata.h"
-# 1 "/tools/Xilinx/Vitis_HLS/2022.1/tps/lnx64/gcc-8.3.0/lib/gcc/x86_64-pc-linux-gnu/8.3.0/../../../../include/c++/8.3.0/climits" 1 3
-# 40 "/tools/Xilinx/Vitis_HLS/2022.1/tps/lnx64/gcc-8.3.0/lib/gcc/x86_64-pc-linux-gnu/8.3.0/../../../../include/c++/8.3.0/climits" 3
-
-# 1 "/tools/Xilinx/Vitis_HLS/2022.1/tps/lnx64/gcc-8.3.0/lib/gcc/x86_64-pc-linux-gnu/8.3.0/../../../../include/c++/8.3.0/x86_64-pc-linux-gnu/bits/c++config.h" 1 3
-# 236 "/tools/Xilinx/Vitis_HLS/2022.1/tps/lnx64/gcc-8.3.0/lib/gcc/x86_64-pc-linux-gnu/8.3.0/../../../../include/c++/8.3.0/x86_64-pc-linux-gnu/bits/c++config.h" 3
-namespace std
-{
-  typedef long unsigned int size_t;
-  typedef long int ptrdiff_t;
-
-
-  typedef decltype(nullptr) nullptr_t;
-
-}
-# 258 "/tools/Xilinx/Vitis_HLS/2022.1/tps/lnx64/gcc-8.3.0/lib/gcc/x86_64-pc-linux-gnu/8.3.0/../../../../include/c++/8.3.0/x86_64-pc-linux-gnu/bits/c++config.h" 3
-namespace std
-{
-  inline namespace __cxx11 __attribute__((__abi_tag__ ("cxx11"))) { }
-}
-namespace __gnu_cxx
-{
-  inline namespace __cxx11 __attribute__((__abi_tag__ ("cxx11"))) { }
-}
-# 508 "/tools/Xilinx/Vitis_HLS/2022.1/tps/lnx64/gcc-8.3.0/lib/gcc/x86_64-pc-linux-gnu/8.3.0/../../../../include/c++/8.3.0/x86_64-pc-linux-gnu/bits/c++config.h" 3
-# 1 "/tools/Xilinx/Vitis_HLS/2022.1/tps/lnx64/gcc-8.3.0/lib/gcc/x86_64-pc-linux-gnu/8.3.0/../../../../include/c++/8.3.0/x86_64-pc-linux-gnu/bits/os_defines.h" 1 3
-# 39 "/tools/Xilinx/Vitis_HLS/2022.1/tps/lnx64/gcc-8.3.0/lib/gcc/x86_64-pc-linux-gnu/8.3.0/../../../../include/c++/8.3.0/x86_64-pc-linux-gnu/bits/os_defines.h" 3
-# 1 "/usr/include/features.h" 1 3 4
-# 439 "/usr/include/features.h" 3 4
-# 1 "/usr/include/stdc-predef.h" 1 3 4
-# 440 "/usr/include/features.h" 2 3 4
-# 461 "/usr/include/features.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/sys/cdefs.h" 1 3 4
-# 452 "/usr/include/x86_64-linux-gnu/sys/cdefs.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/wordsize.h" 1 3 4
-# 453 "/usr/include/x86_64-linux-gnu/sys/cdefs.h" 2 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/long-double.h" 1 3 4
-# 454 "/usr/include/x86_64-linux-gnu/sys/cdefs.h" 2 3 4
-# 462 "/usr/include/features.h" 2 3 4
-# 485 "/usr/include/features.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/gnu/stubs.h" 1 3 4
-# 10 "/usr/include/x86_64-linux-gnu/gnu/stubs.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/gnu/stubs-64.h" 1 3 4
-# 11 "/usr/include/x86_64-linux-gnu/gnu/stubs.h" 2 3 4
-# 486 "/usr/include/features.h" 2 3 4
-# 40 "/tools/Xilinx/Vitis_HLS/2022.1/tps/lnx64/gcc-8.3.0/lib/gcc/x86_64-pc-linux-gnu/8.3.0/../../../../include/c++/8.3.0/x86_64-pc-linux-gnu/bits/os_defines.h" 2 3
-# 509 "/tools/Xilinx/Vitis_HLS/2022.1/tps/lnx64/gcc-8.3.0/lib/gcc/x86_64-pc-linux-gnu/8.3.0/../../../../include/c++/8.3.0/x86_64-pc-linux-gnu/bits/c++config.h" 2 3
-
-
-# 1 "/tools/Xilinx/Vitis_HLS/2022.1/tps/lnx64/gcc-8.3.0/lib/gcc/x86_64-pc-linux-gnu/8.3.0/../../../../include/c++/8.3.0/x86_64-pc-linux-gnu/bits/cpu_defines.h" 1 3
-# 512 "/tools/Xilinx/Vitis_HLS/2022.1/tps/lnx64/gcc-8.3.0/lib/gcc/x86_64-pc-linux-gnu/8.3.0/../../../../include/c++/8.3.0/x86_64-pc-linux-gnu/bits/c++config.h" 2 3
-# 42 "/tools/Xilinx/Vitis_HLS/2022.1/tps/lnx64/gcc-8.3.0/lib/gcc/x86_64-pc-linux-gnu/8.3.0/../../../../include/c++/8.3.0/climits" 2 3
-# 1 "/tools/Xilinx/Vitis_HLS/2022.1/lnx64/tools/clang-3.9-csynth/lib/clang/7.0.0/include/limits.h" 1 3
-# 37 "/tools/Xilinx/Vitis_HLS/2022.1/lnx64/tools/clang-3.9-csynth/lib/clang/7.0.0/include/limits.h" 3
-# 1 "/usr/include/limits.h" 1 3 4
-# 26 "/usr/include/limits.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/libc-header-start.h" 1 3 4
-# 27 "/usr/include/limits.h" 2 3 4
-# 183 "/usr/include/limits.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/posix1_lim.h" 1 3 4
-# 27 "/usr/include/x86_64-linux-gnu/bits/posix1_lim.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/wordsize.h" 1 3 4
-# 28 "/usr/include/x86_64-linux-gnu/bits/posix1_lim.h" 2 3 4
-# 161 "/usr/include/x86_64-linux-gnu/bits/posix1_lim.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/local_lim.h" 1 3 4
-# 38 "/usr/include/x86_64-linux-gnu/bits/local_lim.h" 3 4
-# 1 "/usr/include/linux/limits.h" 1 3 4
-# 39 "/usr/include/x86_64-linux-gnu/bits/local_lim.h" 2 3 4
-# 162 "/usr/include/x86_64-linux-gnu/bits/posix1_lim.h" 2 3 4
-# 184 "/usr/include/limits.h" 2 3 4
+# 1 "./src/matrix_mul.h" 1
 
 
 
-# 1 "/usr/include/x86_64-linux-gnu/bits/posix2_lim.h" 1 3 4
-# 188 "/usr/include/limits.h" 2 3 4
 
 
-
-# 1 "/usr/include/x86_64-linux-gnu/bits/xopen_lim.h" 1 3 4
-# 64 "/usr/include/x86_64-linux-gnu/bits/xopen_lim.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/uio_lim.h" 1 3 4
-# 65 "/usr/include/x86_64-linux-gnu/bits/xopen_lim.h" 2 3 4
-# 192 "/usr/include/limits.h" 2 3 4
-# 38 "/tools/Xilinx/Vitis_HLS/2022.1/lnx64/tools/clang-3.9-csynth/lib/clang/7.0.0/include/limits.h" 2 3
-# 43 "/tools/Xilinx/Vitis_HLS/2022.1/tps/lnx64/gcc-8.3.0/lib/gcc/x86_64-pc-linux-gnu/8.3.0/../../../../include/c++/8.3.0/climits" 2 3
-# 88 "/tools/Xilinx/Vitis_HLS/2022.1/common/technology/autopilot/ap_axi_sdata.h" 2
 # 1 "/tools/Xilinx/Vitis_HLS/2022.1/common/technology/autopilot/ap_int.h" 1
 # 56 "/tools/Xilinx/Vitis_HLS/2022.1/common/technology/autopilot/ap_int.h"
 # 1 "/tools/Xilinx/Vitis_HLS/2022.1/common/technology/autopilot/ap_common.h" 1
@@ -5926,365 +5713,9 @@ inline bool operator!=(
 }
 # 412 "/tools/Xilinx/Vitis_HLS/2022.1/common/technology/autopilot/ap_fixed.h" 2
 # 407 "/tools/Xilinx/Vitis_HLS/2022.1/common/technology/autopilot/ap_int.h" 2
-# 89 "/tools/Xilinx/Vitis_HLS/2022.1/common/technology/autopilot/ap_axi_sdata.h" 2
-
-template <int _AP_W, int _AP_I, ap_q_mode _AP_Q, ap_o_mode _AP_O, int _AP_N>
-struct ap_fixed;
-template <int _AP_W, int _AP_I, ap_q_mode _AP_Q, ap_o_mode _AP_O, int _AP_N>
-struct ap_ufixed;
-
-namespace hls {
-
-template <typename T> constexpr std::size_t bitwidth = sizeof(T) * 8;
-
-template <std::size_t W> constexpr std::size_t bitwidth<ap_int<W>> = W;
-template <std::size_t W> constexpr std::size_t bitwidth<ap_uint<W>> = W;
-template <int _AP_W, int _AP_I, ap_q_mode _AP_Q, ap_o_mode _AP_O, int _AP_N>
-constexpr std::size_t bitwidth<ap_fixed<_AP_W, _AP_I, _AP_Q, _AP_O, _AP_N>> = _AP_W;
-template <int _AP_W, int _AP_I, ap_q_mode _AP_Q, ap_o_mode _AP_O, int _AP_N>
-constexpr std::size_t bitwidth<ap_ufixed<_AP_W, _AP_I, _AP_Q, _AP_O, _AP_N>> = _AP_W;
-
-template <typename T>
-constexpr std::size_t bytewidth = (bitwidth<T> + 8 - 1) / 8;
-
-template <typename T, std::size_t WUser, std::size_t WId, std::size_t WDest> struct axis {
-  static constexpr std::size_t NewWUser = (WUser == 0) ? 1 : WUser;
-  static constexpr std::size_t NewWId = (WId == 0) ? 1 : WId;
-  static constexpr std::size_t NewWDest = (WDest == 0) ? 1 : WDest;
-  T data;
-  ap_uint<bytewidth<T>> keep;
-  ap_uint<bytewidth<T>> strb;
-  ap_uint<NewWUser> user;
-  ap_uint<1> last;
-  ap_uint<NewWId> id;
-  ap_uint<NewWDest> dest;
-
-  ap_uint<NewWUser> *get_user_ptr() {
-#pragma HLS inline
- return (WUser == 0) ? nullptr : &user;
-  }
-  ap_uint<NewWId> *get_id_ptr() {
-#pragma HLS inline
- return (WId == 0) ? nullptr : &id;
-  }
-  ap_uint<NewWDest> *get_dest_ptr() {
-#pragma HLS inline
- return (WDest == 0) ? nullptr : &dest;
-  }
-};
-
-}
-
-template <std::size_t WData, std::size_t WUser, std::size_t WId, std::size_t WDest>
-using ap_axis = hls::axis<ap_int<WData>, WUser, WId, WDest>;
-
-template <std::size_t WData, std::size_t WUser, std::size_t WId, std::size_t WDest>
-using ap_axiu = hls::axis<ap_uint<WData>, WUser, WId, WDest>;
-
-
-template <std::size_t WData, std::size_t WUser, std::size_t WId, std::size_t WDest>
-struct qdma_axis;
-
-template <std::size_t WData> struct qdma_axis<WData, 0, 0, 0> {
-
-  static constexpr std::size_t kBytes = (WData + 7) / 8;
-
-  ap_uint<WData> data;
-  ap_uint<kBytes> keep;
-  ap_uint<1> strb;
-  ap_uint<1> user;
-  ap_uint<1> last;
-  ap_uint<1> id;
-  ap_uint<1> dest;
-
-  ap_uint<1> *get_strb_ptr() {
-#pragma HLS inline
- return nullptr;
-  }
-  ap_uint<1> *get_user_ptr() {
-#pragma HLS inline
- return nullptr;
-  }
-  ap_uint<1> *get_id_ptr() {
-#pragma HLS inline
- return nullptr;
-  }
-  ap_uint<1> *get_dest_ptr() {
-#pragma HLS inline
- return nullptr;
-  }
-
-
-  ap_uint<WData> get_data() const {
-#pragma HLS inline
- return data;
-  }
-  ap_uint<kBytes> get_keep() const {
-#pragma HLS inline
- return keep;
-  }
-  ap_uint<1> get_last() const {
-#pragma HLS inline
- return last;
-  }
-
-  void set_data(const ap_uint<WData> &d) {
-#pragma HLS inline
- data = d;
-  }
-  void set_keep(const ap_uint<kBytes> &k) {
-#pragma HLS inline
- keep = k;
-  }
-  void set_last(const ap_uint<1> &l) {
-#pragma HLS inline
- last = l;
-  }
-  void keep_all() {
-#pragma HLS inline
- ap_uint<kBytes> k = 0;
-    keep = ~k;
-  }
-
-  qdma_axis() {
-#pragma HLS inline
- ;
-  }
-  qdma_axis(ap_uint<WData> d) : data(d) {
-#pragma HLS inline
- ;
-  }
-  qdma_axis(ap_uint<WData> d, ap_uint<kBytes> k) : data(d), keep(k) {
-#pragma HLS inline
- ;
-  }
-  qdma_axis(ap_uint<WData> d, ap_uint<kBytes> k, ap_uint<1> l)
-      : data(d), keep(k), last(l) {
-#pragma HLS inline
- ;
-  }
-  qdma_axis(const qdma_axis<WData, 0, 0, 0> &d)
-      : data(d.data), keep(d.keep), last(d.last) {
-#pragma HLS inline
- ;
-  }
-  qdma_axis &operator=(const qdma_axis<WData, 0, 0, 0> &d) {
-#pragma HLS inline
- data = d.data;
-    keep = d.keep;
-    last = d.last;
-    return *this;
-  }
-};
-
-
-
-
-namespace hls {
-
-template <typename T, std::size_t WUser, std::size_t WId, std::size_t WDest>
-class stream<axis<T, WUser, WId, WDest>> final {
-  typedef axis<T, WUser, WId, WDest> __STREAM_T__;
-
-public:
-
-  inline __attribute__((always_inline)) stream() {}
-
-  inline __attribute__((always_inline)) stream(const char *name) { (void)name; }
-
-
-private:
-  inline __attribute__((always_inline)) stream(const stream<__STREAM_T__> &chn) : V(chn.V) {}
-
-public:
-
-  inline __attribute__((always_inline)) void operator>>(__STREAM_T__ &rdata) { read(rdata); }
-
-  inline __attribute__((always_inline)) void operator<<(const __STREAM_T__ &wdata) { write(wdata); }
-
-
-  bool empty() {
-#pragma HLS inline
- bool tmp = __fpga_axis_valid(&V.data, &V.keep, &V.strb, V.get_user_ptr(),
-                                 &V.last, V.get_id_ptr(), V.get_dest_ptr());
-    return !tmp;
-  }
-
-  bool full() {
-#pragma HLS inline
- bool tmp = __fpga_axis_ready(&V.data, &V.keep, &V.strb, V.get_user_ptr(),
-                                 &V.last, V.get_id_ptr(), V.get_dest_ptr());
-    return !tmp;
-  }
-
-
-  void read(__STREAM_T__ &dout) {
-#pragma HLS inline
- __STREAM_T__ tmp;
-    __fpga_axis_pop(&V.data, &V.keep, &V.strb, V.get_user_ptr(), &V.last,
-                    V.get_id_ptr(), V.get_dest_ptr(), &tmp.data, &tmp.keep,
-                    &tmp.strb, tmp.get_user_ptr(), &tmp.last, tmp.get_id_ptr(),
-                    tmp.get_dest_ptr());
-    dout = tmp;
-  }
-
-  __STREAM_T__ read() {
-#pragma HLS inline
- __STREAM_T__ tmp;
-    __fpga_axis_pop(&V.data, &V.keep, &V.strb, V.get_user_ptr(), &V.last,
-                    V.get_id_ptr(), V.get_dest_ptr(), &tmp.data, &tmp.keep,
-                    &tmp.strb, tmp.get_user_ptr(), &tmp.last, tmp.get_id_ptr(),
-                    tmp.get_dest_ptr());
-    return tmp;
-  }
-
-
-  void write(const __STREAM_T__ &din) {
-#pragma HLS inline
- __STREAM_T__ tmp = din;
-    __fpga_axis_push(&V.data, &V.keep, &V.strb, V.get_user_ptr(), &V.last,
-                     V.get_id_ptr(), V.get_dest_ptr(), &tmp.data, &tmp.keep,
-                     &tmp.strb, tmp.get_user_ptr(), &tmp.last, tmp.get_id_ptr(),
-                     tmp.get_dest_ptr());
-  }
-
-
-  bool read_nb(__STREAM_T__ &dout) {
-#pragma HLS inline
- __STREAM_T__ tmp;
-    if (__fpga_axis_nb_pop(&V.data, &V.keep, &V.strb, V.get_user_ptr(), &V.last,
-                           V.get_id_ptr(), V.get_dest_ptr(), &tmp.data,
-                           &tmp.keep, &tmp.strb, tmp.get_user_ptr(),
-                           &tmp.last, tmp.get_id_ptr(), tmp.get_dest_ptr())) {
-      dout = tmp;
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-
-  bool write_nb(const __STREAM_T__ &in) {
-#pragma HLS inline
- __STREAM_T__ tmp = in;
-    bool full_n = __fpga_axis_nb_push(
-        &V.data, &V.keep, &V.strb, V.get_user_ptr(), &V.last, V.get_id_ptr(),
-        V.get_dest_ptr(), &tmp.data, &tmp.keep, &tmp.strb, tmp.get_user_ptr(),
-        &tmp.last, tmp.get_id_ptr(), tmp.get_dest_ptr());
-    return full_n;
-  }
-
-private:
-  __STREAM_T__ V __attribute__((no_ctor));
-};
-
-
-template <std::size_t WData>
-class stream<qdma_axis<WData, 0, 0, 0>> {
-  typedef qdma_axis<WData, 0, 0, 0> __STREAM_T__;
-
-public:
-
-  inline __attribute__((always_inline)) stream() {}
-
-  inline __attribute__((always_inline)) stream(const char *name) { (void)name; }
-
-
-private:
-  inline __attribute__((always_inline)) stream(const stream<__STREAM_T__> &chn) : V(chn.V) {}
-
-public:
-
-  inline __attribute__((always_inline)) void operator>>(__STREAM_T__ &rdata) { read(rdata); }
-
-  inline __attribute__((always_inline)) void operator<<(const __STREAM_T__ &wdata) { write(wdata); }
-
-
-  bool empty() {
-#pragma HLS inline
- bool tmp = __fpga_axis_valid(&V.data, &V.keep, V.get_strb_ptr(), V.get_user_ptr(),
-                                 &V.last, V.get_id_ptr(), V.get_dest_ptr());
-    return !tmp;
-  }
-
-  bool full() {
-#pragma HLS inline
- bool tmp = __fpga_axis_ready(&V.data, &V.keep, V.get_strb_ptr(), V.get_user_ptr(),
-                                 &V.last, V.get_id_ptr(), V.get_dest_ptr());
-    return !tmp;
-  }
-
-
-  void read(__STREAM_T__ &dout) {
-#pragma HLS inline
- __STREAM_T__ tmp;
-    __fpga_axis_pop(&V.data, &V.keep, V.get_strb_ptr(), V.get_user_ptr(),
-                    &V.last, V.get_id_ptr(), V.get_dest_ptr(), &tmp.data,
-                    &tmp.keep, tmp.get_strb_ptr(), tmp.get_user_ptr(),
-                    &tmp.last, tmp.get_id_ptr(), tmp.get_dest_ptr());
-    dout = tmp;
-  }
-
-  __STREAM_T__ read() {
-#pragma HLS inline
- __STREAM_T__ tmp;
-    __fpga_axis_pop(&V.data, &V.keep, V.get_strb_ptr(), V.get_user_ptr(), &V.last,
-                    V.get_id_ptr(), V.get_dest_ptr(), &tmp.data, &tmp.keep,
-                    tmp.get_strb_ptr(), tmp.get_user_ptr(), &tmp.last, tmp.get_id_ptr(),
-                    tmp.get_dest_ptr());
-    return tmp;
-  }
-
-
-  void write(const __STREAM_T__ &din) {
-#pragma HLS inline
- __STREAM_T__ tmp = din;
-    __fpga_axis_push(&V.data, &V.keep, V.get_strb_ptr(), V.get_user_ptr(), &V.last,
-                     V.get_id_ptr(), V.get_dest_ptr(), &tmp.data, &tmp.keep,
-                     tmp.get_strb_ptr(), tmp.get_user_ptr(), &tmp.last, tmp.get_id_ptr(),
-                     tmp.get_dest_ptr());
-  }
-
-
-  bool read_nb(__STREAM_T__ &dout) {
-#pragma HLS inline
- __STREAM_T__ tmp;
-
-    if (__fpga_axis_nb_pop(&V.data, &V.keep, &V.strb, V.get_user_ptr(), &V.last,
-                           V.get_id_ptr(), V.get_dest_ptr(), &tmp.data,
-                           &tmp.keep, &tmp.strb, tmp.get_user_ptr(),
-                           &tmp.last, tmp.get_id_ptr(), tmp.get_dest_ptr())) {
-      dout = tmp;
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-
-  bool write_nb(const __STREAM_T__ &in) {
-#pragma HLS inline
- __STREAM_T__ tmp = in;
-    bool full_n = __fpga_axis_nb_push(
-        &V.data, &V.keep, V.get_strb_ptr(), V.get_user_ptr(), &V.last, V.get_id_ptr(),
-        V.get_dest_ptr(), &tmp.data, &tmp.keep, tmp.get_strb_ptr(), tmp.get_user_ptr(),
-        &tmp.last, tmp.get_id_ptr(), tmp.get_dest_ptr());
-    return full_n;
-  }
-
-private:
-  __STREAM_T__ V __attribute__((no_ctor));
-};
-
-}
-# 5 "./src/matrix_mul.cpp" 2
-# 1 "/tools/Xilinx/Vitis_HLS/2022.1/common/technology/autopilot/ap_int.h" 1
-# 6 "./src/matrix_mul.cpp" 2
-
-
+# 7 "./src/matrix_mul.h" 2
 
 typedef float data_t;
-
 
 extern "C" {
 __attribute__((sdx_kernel("matrix_mul", 0))) void matrix_mul(
@@ -6293,73 +5724,91 @@ __attribute__((sdx_kernel("matrix_mul", 0))) void matrix_mul(
     data_t *C,
     int M,
     int N,
-    int K
-) {
-#line 11 "/home/ubuntu/matrix_mul_hls/run_hls.tcl"
-#pragma HLSDIRECTIVE TOP name=matrix_mul
-# 20 "./src/matrix_mul.cpp"
+    int P
+);
+}
+# 4 "./src/matrix_mul.cpp" 2
 
-#pragma HLS INTERFACE m_axi port=A offset=slave bundle=gmem0 depth=4096
-#pragma HLS INTERFACE m_axi port=B offset=slave bundle=gmem1 depth=4096
-#pragma HLS INTERFACE m_axi port=C offset=slave bundle=gmem2 depth=4096
+__attribute__((sdx_kernel("matrix_mul", 0))) void matrix_mul(
+    const data_t *A,
+    const data_t *B,
+    data_t *C,
+    int M,
+    int N,
+    int P
+) {
+#line 11 "/home/ubuntu/Documents/GitHub/NTU-Special-Project-on-AAHLS/lab_B/matrix_mul/run_hls.tcl"
+#pragma HLSDIRECTIVE TOP name=matrix_mul
+# 12 "./src/matrix_mul.cpp"
+
+#pragma HLS INTERFACE m_axi port=A offset=slave bundle=gmem0
+#pragma HLS INTERFACE m_axi port=B offset=slave bundle=gmem1
+#pragma HLS INTERFACE m_axi port=C offset=slave bundle=gmem2
 
 #pragma HLS INTERFACE s_axilite port=A bundle=control
 #pragma HLS INTERFACE s_axilite port=B bundle=control
 #pragma HLS INTERFACE s_axilite port=C bundle=control
 #pragma HLS INTERFACE s_axilite port=M bundle=control
 #pragma HLS INTERFACE s_axilite port=N bundle=control
-#pragma HLS INTERFACE s_axilite port=K bundle=control
+#pragma HLS INTERFACE s_axilite port=P bundle=control
 #pragma HLS INTERFACE s_axilite port=return bundle=control
 
- data_t local_A[256][256];
-    data_t local_B[256][256];
-    data_t local_C[256][256];
+ const int TILE_SIZE = 64;
+    data_t local_A[TILE_SIZE][TILE_SIZE];
+    data_t local_B[TILE_SIZE][TILE_SIZE];
+    data_t local_C[TILE_SIZE][TILE_SIZE];
 
 #pragma HLS ARRAY_PARTITION variable=local_A dim=2 complete
 #pragma HLS ARRAY_PARTITION variable=local_B dim=1 complete
+#pragma HLS ARRAY_PARTITION variable=local_C dim=2 complete
 
+ VITIS_LOOP_34_1: for (int i = 0; i < M; i += TILE_SIZE) {
+        VITIS_LOOP_35_2: for (int j = 0; j < P; j += TILE_SIZE) {
 
- readA: for (int i = 0; i < M; i++) {
-        readA_inner: for (int j = 0; j < K; j++) {
+            VITIS_LOOP_37_3: for (int ii = 0; ii < TILE_SIZE; ii++) {
+                VITIS_LOOP_38_4: for (int jj = 0; jj < TILE_SIZE; jj++) {
 #pragma HLS PIPELINE II=1
- local_A[i][j] = A[i * K + j];
-        }
-    }
-
-    readB: for (int i = 0; i < K; i++) {
-        readB_inner: for (int j = 0; j < N; j++) {
-#pragma HLS PIPELINE II=1
- local_B[i][j] = B[i * N + j];
-        }
-    }
-
-
-    initC: for (int i = 0; i < M; i++) {
-        initC_inner: for (int j = 0; j < N; j++) {
-#pragma HLS PIPELINE II=1
- local_C[i][j] = 0;
-        }
-    }
-
-
-    mmult: for (int i = 0; i < M; i++) {
-        mmult_j: for (int j = 0; j < N; j++) {
-#pragma HLS PIPELINE II=1
- data_t sum = 0;
-            mmult_k: for (int k = 0; k < K; k++) {
-#pragma HLS UNROLL
- sum += local_A[i][k] * local_B[k][j];
+ local_C[ii][jj] = 0;
+                }
             }
-            local_C[i][j] = sum;
-        }
-    }
 
+            VITIS_LOOP_44_5: for (int k = 0; k < N; k += TILE_SIZE) {
 
-    writeC: for (int i = 0; i < M; i++) {
-        writeC_inner: for (int j = 0; j < N; j++) {
+                VITIS_LOOP_46_6: for (int ii = 0; ii < TILE_SIZE; ii++) {
+                    VITIS_LOOP_47_7: for (int kk = 0; kk < TILE_SIZE; kk++) {
 #pragma HLS PIPELINE II=1
- C[i * N + j] = local_C[i][j];
+ local_A[ii][kk] = A[(i + ii) * N + (k + kk)];
+                    }
+                }
+
+                VITIS_LOOP_53_8: for (int kk = 0; kk < TILE_SIZE; kk++) {
+                    VITIS_LOOP_54_9: for (int jj = 0; jj < TILE_SIZE; jj++) {
+#pragma HLS PIPELINE II=1
+ local_B[kk][jj] = B[(k + kk) * P + (j + jj)];
+                    }
+                }
+
+
+                VITIS_LOOP_61_10: for (int ii = 0; ii < TILE_SIZE; ii++) {
+                    VITIS_LOOP_62_11: for (int jj = 0; jj < TILE_SIZE; jj++) {
+#pragma HLS PIPELINE II=1
+ data_t sum = local_C[ii][jj];
+                        VITIS_LOOP_65_12: for (int kk = 0; kk < TILE_SIZE; kk++) {
+#pragma HLS UNROLL
+ sum += local_A[ii][kk] * local_B[kk][jj];
+                        }
+                        local_C[ii][jj] = sum;
+                    }
+                }
+            }
+
+
+            VITIS_LOOP_75_13: for (int ii = 0; ii < TILE_SIZE; ii++) {
+                VITIS_LOOP_76_14: for (int jj = 0; jj < TILE_SIZE; jj++) {
+#pragma HLS PIPELINE II=1
+ C[(i + ii) * P + (j + jj)] = local_C[ii][jj];
+                }
+            }
         }
     }
-}
 }

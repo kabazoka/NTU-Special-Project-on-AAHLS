@@ -1,0 +1,7 @@
+*.log
+*.link_summary
+*.compile_summary
+*.xo
+/matrix_mul/_x
+/matrix_mul/.ipcache
+/matrix_mul/.Xil
