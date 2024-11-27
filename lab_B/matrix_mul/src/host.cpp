@@ -4,7 +4,9 @@
 #include <vector>
 #include <chrono>
 #include "xcl2.hpp"
-#include "matrix_mul.h"
+// #include "matrix_mul.h"  // Remove or comment out
+#include "host.h"
+
 
 int main(int argc, char** argv) {
     // Matrix sizes to test

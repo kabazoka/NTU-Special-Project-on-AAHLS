@@ -3,7 +3,11 @@
 #ifndef MATRIX_MUL_H
 #define MATRIX_MUL_H
 
+#ifndef __HOST__
+// Include HLS headers only when not compiling for the host
 #include <ap_int.h>
+// Other HLS-specific includes
+#endif
 
 typedef float data_t;
 
