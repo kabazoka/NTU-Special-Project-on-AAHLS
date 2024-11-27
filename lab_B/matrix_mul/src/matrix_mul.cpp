@@ -1,6 +1,6 @@
 // File: src/matrix_mul.cpp
 
-#include "matrix_mul.h"
+#include "matrix_mul.hpp"
 
 void matrix_mul(
     const data_t *A,

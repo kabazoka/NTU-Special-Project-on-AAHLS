@@ -3,7 +3,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cmath>
-#include "matrix_mul.h"
+#include "matrix_mul.hpp"
 
 #define MAX_SIZE 4096  // Maximum matrix size
 

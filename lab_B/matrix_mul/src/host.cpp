@@ -5,7 +5,7 @@
 #include <chrono>
 #include "xcl2.hpp"
 // #include "matrix_mul.h"  // Remove or comment out
-#include "host.h"
+#include "host.hpp"
 
 
 int main(int argc, char** argv) {

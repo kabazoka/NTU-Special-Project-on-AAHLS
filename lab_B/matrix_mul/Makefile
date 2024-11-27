@@ -14,7 +14,7 @@ HOST_SRCS := ./src/host.cpp ./src/xcl2.cpp
 KERNEL_SRCS := ./src/matrix_mul.cpp
 
 CXX := g++
-CXXFLAGS := -I/opt/xilinx/xrt/include -I/tools/Xilinx/Vitis/2022.1/include -I/usr/include -I./src -O2 -fmessage-length=0 -std=c++14 -D__HOST__
+CXXFLAGS := -I/opt/xilinx/xrt/include -I/tools/Xilinx/Vitis/2022.1/include -I/usr/include -I./include -O2 -fmessage-length=0 -std=c++14 -D__HOST__
 LDFLAGS := -L/opt/xilinx/xrt/lib -lxilinxopencl -lpthread -lrt -lstdc++ -Wl,--rpath,/opt/xilinx/xrt/lib
 
 CXXFLAGS += -I/opt/xilinx/Vitis/2022.1/include
