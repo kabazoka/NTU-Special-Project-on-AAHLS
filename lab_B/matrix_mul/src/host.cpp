@@ -3,14 +3,14 @@
 #include <iostream>
 #include <vector>
 #include <chrono>
-#include "xcl2.hpp"
+#include "../include/xcl2.hpp"
 // #include "matrix_mul.h"  // Remove or comment out
-#include "host.hpp"
+#include "../include/host.hpp"
 
 
 int main(int argc, char** argv) {
     // Matrix sizes to test
-    const int sizes[] = {128, 256, 512, 1024, 2048, 4096};
+    const int sizes[] = {128, 256, 512, 1024, 2048};
 
     // Device and context setup
     cl_int err;

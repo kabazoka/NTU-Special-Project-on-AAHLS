@@ -1,5 +1,5 @@
 obj/testbench.o: ../../../../src/testbench.cpp \
- ../../../../src/matrix_mul.h \
+ ../../../../src/../include/matrix_mul.hpp \
  /tools/Xilinx/Vitis_HLS/2022.1/include/ap_int.h \
  /tools/Xilinx/Vitis_HLS/2022.1/include/ap_common.h \
  /tools/Xilinx/Vitis_HLS/2022.1/include/ap_decl.h \

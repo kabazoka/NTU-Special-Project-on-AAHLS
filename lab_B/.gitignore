@@ -5,3 +5,7 @@
 /matrix_mul/_x
 /matrix_mul/.ipcache
 /matrix_mul/.Xil
+/matrix_mul/matrix_mul_hls/solution1/.autopilot
+/matrix_mul/matrix_mul_hls/solution1/.debug
+/matrix_mul/matrix_mul_hls/solution1/csim
+/matrix_mul/matrix_mul_hls/solution1/impl

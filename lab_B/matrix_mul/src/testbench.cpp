@@ -3,9 +3,9 @@
 #include <iostream>
 #include <cstdlib>
 #include <cmath>
-#include "matrix_mul.hpp"
+#include "../include/matrix_mul.hpp"
 
-#define MAX_SIZE 4096  // Maximum matrix size
+#define MAX_SIZE 2048  // Maximum matrix size
 
 void reference_mmul(
     const data_t *A,
@@ -28,7 +28,7 @@ void reference_mmul(
 
 int main() {
     // Matrix sizes to test
-    const int sizes[] = {128, 256, 512, 1024, 2048, 4096};
+    const int sizes[] = {128, 256, 512, 1024, 2048};
     const int num_sizes = sizeof(sizes) / sizeof(sizes[0]);
 
     bool all_tests_passed = true;

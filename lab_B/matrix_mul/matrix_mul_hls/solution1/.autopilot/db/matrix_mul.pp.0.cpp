@@ -157,9 +157,9 @@ extern "C" {
 }
 # 2 "<built-in>" 2
 # 1 "./src/matrix_mul.cpp" 2
+# 1 "./src/../include/matrix_mul.hpp" 1
 
 
-# 1 "./src/matrix_mul.h" 1
 
 
 
@@ -5713,7 +5713,9 @@ inline bool operator!=(
 }
 # 412 "/tools/Xilinx/Vitis_HLS/2022.1/common/technology/autopilot/ap_fixed.h" 2
 # 407 "/tools/Xilinx/Vitis_HLS/2022.1/common/technology/autopilot/ap_int.h" 2
-# 7 "./src/matrix_mul.h" 2
+# 9 "./src/../include/matrix_mul.hpp" 2
+
+
 
 typedef float data_t;
 
@@ -5727,7 +5729,7 @@ __attribute__((sdx_kernel("matrix_mul", 0))) void matrix_mul(
     int P
 );
 }
-# 4 "./src/matrix_mul.cpp" 2
+# 2 "./src/matrix_mul.cpp" 2
 
 __attribute__((sdx_kernel("matrix_mul", 0))) void matrix_mul(
     const data_t *A,
@@ -5739,11 +5741,11 @@ __attribute__((sdx_kernel("matrix_mul", 0))) void matrix_mul(
 ) {
 #line 11 "/home/ubuntu/Documents/GitHub/NTU-Special-Project-on-AAHLS/lab_B/matrix_mul/run_hls.tcl"
 #pragma HLSDIRECTIVE TOP name=matrix_mul
-# 12 "./src/matrix_mul.cpp"
+# 10 "./src/matrix_mul.cpp"
 
-#pragma HLS INTERFACE m_axi port=A offset=slave bundle=gmem0
-#pragma HLS INTERFACE m_axi port=B offset=slave bundle=gmem1
-#pragma HLS INTERFACE m_axi port=C offset=slave bundle=gmem2
+#pragma HLS INTERFACE m_axi port=A offset=slave bundle=gmem0 max_read_burst_length=256
+#pragma HLS INTERFACE m_axi port=B offset=slave bundle=gmem1 max_read_burst_length=256
+#pragma HLS INTERFACE m_axi port=C offset=slave bundle=gmem2 max_write_burst_length=256
 
 #pragma HLS INTERFACE s_axilite port=A bundle=control
 #pragma HLS INTERFACE s_axilite port=B bundle=control
@@ -5753,60 +5755,84 @@ __attribute__((sdx_kernel("matrix_mul", 0))) void matrix_mul(
 #pragma HLS INTERFACE s_axilite port=P bundle=control
 #pragma HLS INTERFACE s_axilite port=return bundle=control
 
- const int TILE_SIZE = 64;
+ const int TILE_SIZE = 16;
+    const int UNROLL_FACTOR = 4;
+
     data_t local_A[TILE_SIZE][TILE_SIZE];
-    data_t local_B[TILE_SIZE][TILE_SIZE];
+    data_t local_B0[TILE_SIZE][TILE_SIZE];
+    data_t local_B1[TILE_SIZE][TILE_SIZE];
     data_t local_C[TILE_SIZE][TILE_SIZE];
 
-#pragma HLS ARRAY_PARTITION variable=local_A dim=2 complete
-#pragma HLS ARRAY_PARTITION variable=local_B dim=1 complete
-#pragma HLS ARRAY_PARTITION variable=local_C dim=2 complete
+#pragma HLS ARRAY_PARTITION variable=local_A complete dim=2
+#pragma HLS ARRAY_PARTITION variable=local_B0 complete dim=1
+#pragma HLS ARRAY_PARTITION variable=local_B1 complete dim=1
+#pragma HLS ARRAY_PARTITION variable=local_C complete dim=2
 
- VITIS_LOOP_34_1: for (int i = 0; i < M; i += TILE_SIZE) {
-        VITIS_LOOP_35_2: for (int j = 0; j < P; j += TILE_SIZE) {
+#pragma HLS DATAFLOW
 
-            VITIS_LOOP_37_3: for (int ii = 0; ii < TILE_SIZE; ii++) {
-                VITIS_LOOP_38_4: for (int jj = 0; jj < TILE_SIZE; jj++) {
+ VITIS_LOOP_38_1: for (int i = 0; i < M; i += TILE_SIZE) {
+        VITIS_LOOP_39_2: for (int j = 0; j < P; j += TILE_SIZE) {
+
+
+            init_c:
+            for (int ii = 0; ii < TILE_SIZE; ii++) {
 #pragma HLS PIPELINE II=1
- local_C[ii][jj] = 0;
+ VITIS_LOOP_45_3: for (int jj = 0; jj < TILE_SIZE; jj++) {
+                    local_C[ii][jj] = 0;
                 }
             }
 
-            VITIS_LOOP_44_5: for (int k = 0; k < N; k += TILE_SIZE) {
+            bool toggle = false;
 
-                VITIS_LOOP_46_6: for (int ii = 0; ii < TILE_SIZE; ii++) {
-                    VITIS_LOOP_47_7: for (int kk = 0; kk < TILE_SIZE; kk++) {
+            VITIS_LOOP_52_4: for (int k = 0; k < N; k += TILE_SIZE) {
+
+
+                load_a:
+                for (int ii = 0; ii < TILE_SIZE; ii++) {
 #pragma HLS PIPELINE II=1
- local_A[ii][kk] = A[(i + ii) * N + (k + kk)];
+ VITIS_LOOP_58_5: for (int kk = 0; kk < TILE_SIZE; kk++) {
+                        local_A[ii][kk] = A[(i + ii) * N + (k + kk)];
                     }
                 }
 
-                VITIS_LOOP_53_8: for (int kk = 0; kk < TILE_SIZE; kk++) {
-                    VITIS_LOOP_54_9: for (int jj = 0; jj < TILE_SIZE; jj++) {
+
+                load_b:
+                for (int kk = 0; kk < TILE_SIZE; kk++) {
 #pragma HLS PIPELINE II=1
- local_B[kk][jj] = B[(k + kk) * P + (j + jj)];
+ VITIS_LOOP_67_6: for (int jj = 0; jj < TILE_SIZE; jj++) {
+                        if (toggle)
+                            local_B0[kk][jj] = B[(k + kk) * P + (j + jj)];
+                        else
+                            local_B1[kk][jj] = B[(k + kk) * P + (j + jj)];
                     }
                 }
+                toggle = !toggle;
 
 
-                VITIS_LOOP_61_10: for (int ii = 0; ii < TILE_SIZE; ii++) {
-                    VITIS_LOOP_62_11: for (int jj = 0; jj < TILE_SIZE; jj++) {
+                compute:
+                for (int ii = 0; ii < TILE_SIZE; ii++) {
+                    VITIS_LOOP_79_7: for (int jj = 0; jj < TILE_SIZE; jj++) {
 #pragma HLS PIPELINE II=1
- data_t sum = local_C[ii][jj];
-                        VITIS_LOOP_65_12: for (int kk = 0; kk < TILE_SIZE; kk++) {
+ data_t sum = 0;
+                        VITIS_LOOP_82_8: for (int kk = 0; kk < TILE_SIZE; kk += UNROLL_FACTOR) {
+#pragma HLS UNROLL factor=UNROLL_FACTOR
+ VITIS_LOOP_84_9: for (int u = 0; u < UNROLL_FACTOR; u++) {
 #pragma HLS UNROLL
- sum += local_A[ii][kk] * local_B[kk][jj];
+ sum += local_A[ii][kk + u] *
+                                       (toggle ? local_B1[kk + u][jj] : local_B0[kk + u][jj]);
+                            }
                         }
-                        local_C[ii][jj] = sum;
+                        local_C[ii][jj] += sum;
                     }
                 }
             }
 
 
-            VITIS_LOOP_75_13: for (int ii = 0; ii < TILE_SIZE; ii++) {
-                VITIS_LOOP_76_14: for (int jj = 0; jj < TILE_SIZE; jj++) {
+            store_c:
+            for (int ii = 0; ii < TILE_SIZE; ii++) {
 #pragma HLS PIPELINE II=1
- C[(i + ii) * P + (j + jj)] = local_C[ii][jj];
+ VITIS_LOOP_99_10: for (int jj = 0; jj < TILE_SIZE; jj++) {
+                    C[(i + ii) * P + (j + jj)] = local_C[ii][jj];
                 }
             }
         }

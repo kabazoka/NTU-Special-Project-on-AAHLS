@@ -1,5 +1,5 @@
 obj/matrix_mul.o: ../../../../src/matrix_mul.cpp \
- ../../../../src/matrix_mul.h \
+ ../../../../src/../include/matrix_mul.hpp \
  /tools/Xilinx/Vitis_HLS/2022.1/include/ap_int.h \
  /tools/Xilinx/Vitis_HLS/2022.1/include/ap_common.h \
  /tools/Xilinx/Vitis_HLS/2022.1/include/ap_decl.h \

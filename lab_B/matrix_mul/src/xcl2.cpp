@@ -14,7 +14,7 @@
 * under the License.
 */
 
-#include "xcl2.hpp"
+#include "../include/xcl2.hpp"
 #include <climits>
 #include <sys/stat.h>
 #include <string>
